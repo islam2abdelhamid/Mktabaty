@@ -44,7 +44,7 @@ html{
 }
 
 .star-rating label {
-    color: #bbb;
+    color: rgb(216, 212, 212);
     font-size: 18px;
     padding: 0;
     cursor: pointer;
@@ -83,5 +83,108 @@ html{
 
 }
 
-
 /* End of sidebar */
+
+
+/* lease Button */
+button:not(:disabled) {
+  width: 130px;
+}
+
+/* comment rate*/
+.rate {
+  margin-left: 30px;
+}
+.commentRate  {
+  font-size: 20px;
+  margin-left: 10px;
+  color: #ccc;
+}
+
+/* space between rows*/
+.top-buffer {
+  margin-top:50px;
+}
+
+/*submit button of comment*/
+.commentButton  {
+  margin-top: 5px;
+}
+
+/*vertical center of comment rate*/
+.vertical-center {
+  display: flex;
+  align-items: center;
+}
+
+.thumbnail  {
+  width: 70px;
+  height: 70px;
+  border: solid 1px gainsboro;
+  display: flex;
+  align-items: center;
+  
+}
+
+.user-photo  {
+  width: 60px;
+  height: 60px;
+}
+
+.panel-heading  {
+  border: solid 1px rgb(200, 196, 196);
+  border-radius: 5px 5px 0 0;
+  background-color: rgb(238, 233, 233);
+  padding: 8px;
+}
+
+.panel-body  {
+  border: solid 1px rgb(200, 196, 196);
+  border-radius: 0 0 5px 5px;
+  height: auto;
+  padding: 7px;
+}
+
+.panel>.panel-heading:after,.panel>.panel-heading:before{
+  position:absolute;
+  top:11px;left:-16px;
+  right:100%;
+  width:0;
+  height:0;
+  display:block;
+  content:" ";
+  border-color:transparent;
+  border-style:solid solid outset;
+  pointer-events:none;
+}
+.panel>.panel-heading:after{
+  border-width:7px;
+  border-right-color:#f7f7f7;
+  margin-top:1px;
+  margin-left:2px;
+}
+.panel>.panel-heading:before{
+  border-right-color:#ddd;
+  border-width:8px;
+}
+
+/* pagination button*/
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+  border: 1px solid #ddd;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: #ddd;
+}
+
+/*footer*/
+
+.footer{
+  height: 10px;
+}
