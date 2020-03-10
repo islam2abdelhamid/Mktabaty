@@ -3,7 +3,7 @@
 <div class="col-md-4 mt-4">
   <div class="card">
 
-    <img class="card-img-top" src="assets/images/got.jpg" alt="book image" height="250px" />
+    <img class="card-img-top" src="assets/user/images/got.jpg" alt="book image" height="250px" />
 
     <div class="card-body">
       <div class="d-flex justify-content-between">
