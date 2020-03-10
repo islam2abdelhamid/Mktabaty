@@ -1,3 +1,6 @@
+
+
+
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -44,4 +47,14 @@ Route::get('/register', function () {
 Route::get('/admin', function () {
     return view('dashboard.pages.admins');
 });
+Route::prefix('admin')->group(function (){
 
+    Route::resource(
+    
+        'categories','Admin\CategoryController'
+        
+        
+    );
+    
+    });
+    
