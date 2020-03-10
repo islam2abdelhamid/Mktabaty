@@ -21,6 +21,8 @@ class CreateBooksTable extends Migration
             $table->double('price');
             $table->integer('quantity')->default(0);
             $table->integer('avaliable');
+            $table->unsignedBigInteger('categorie_id');
+            $table->foreign('categorie_id')->references('id')->on('categories')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
