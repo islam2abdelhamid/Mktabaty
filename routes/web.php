@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,9 +14,34 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('mktabaty.pages.books.index');
 });
 
-Auth::routes();
+Route::get('/favorites', function () {
+    return view('mktabaty.pages.books.favorites');
+});
 
-Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/books', function () {
+    return view('mktabaty.pages.books.user-books');
+});
+
+
+Route::get('/book', function () {
+    return view('mktabaty.pages.books.book');
+});
+
+Route::get('/login', function () {
+    return view('mktabaty.pages.user.login');
+});
+
+
+Route::get('/register', function () {
+    return view('mktabaty.pages.user.register');
+});
+
+
+Route::get('/admin', function () {
+    return view('dashboard.pages.admins');
+});
+
