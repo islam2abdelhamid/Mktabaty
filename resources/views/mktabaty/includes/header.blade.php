@@ -13,7 +13,7 @@
 </head>
 
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
-  <a class="navbar-brand" href="index.html">Mktabty</a>
+  <a class="navbar-brand" href="/">Mktabty</a>
   <div class="collapse navbar-collapse" id="collapsibleNavId">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item ">
