@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', function () {
+    return view('welcome');
+})->middleware(['auth']);
+
+Auth::routes();
 
 Route::get('/', function () {
     return view('mktabaty.pages.books.index');
@@ -34,14 +39,14 @@ Route::get('/book', function () {
     return view('mktabaty.pages.books.book');
 });
 
-Route::get('/login', function () {
-    return view('mktabaty.pages.user.login');
-});
+// Route::get('/login', function () {
+//     return view('mktabaty.pages.user.login');
+// });
 
 
-Route::get('/register', function () {
-    return view('mktabaty.pages.user.register');
-});
+// Route::get('/register', function () {
+//     return view('mktabaty.pages.user.register');
+// });
 
 
 Route::get('/admin', function () {
