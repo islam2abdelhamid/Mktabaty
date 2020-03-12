@@ -61,5 +61,6 @@ Route::get('/admin/users', function () {
 });
 
 Route::prefix('admin')->group(function () {
-    Route::resource('categories', 'Admin\CategoryController');
+    Route::resource('cat', 'Admin\CategoryController');
 });
+

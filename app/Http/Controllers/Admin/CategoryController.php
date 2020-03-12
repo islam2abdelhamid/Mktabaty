@@ -16,7 +16,7 @@ class CategoryController extends Controller
     {
         //
         $categories=Category::all();
-        return view('categories.index', compact('categories'))->with('categories', $categories);
+        return view('dashboard.pages.books', compact('categories'))->with('categories', $categories);
         }
 
     /**
@@ -45,7 +45,8 @@ class CategoryController extends Controller
     
     
     $category=Category::create($validatedData);
-    return redirect('/admin/categories')->with('sucess','Category is successfully saved');
+   
+    return redirect('/admin/cat')->with('sucess','Category is successfully saved');
     }
 
     /**
@@ -69,9 +70,12 @@ class CategoryController extends Controller
     {
 
         //will retrieve the first result of the query; however, if no result is found;
-        $category= Category::findOrFail($id);
+        // $category= Category::findOrFail($id);
 
-        return view('categories.edit', compact('category'));
+        $category = Category::findOrNew($id);
+        $category->fill($request->all());
+        $category->save();
+        return view('dashboard.pages.books', compact('category'));
         
     }
 
@@ -93,7 +97,7 @@ class CategoryController extends Controller
     
         Category::whereId($id)->update($validatedData);
 
-        return redirect('/admin/categories')->with('success', 'Category is successfully updated');    
+        return redirect('/admin/cat')->with('success', 'Category is successfully updated');    
 
     }
 
@@ -109,6 +113,6 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $category->delete();
 
-        return  redirect('/admin/categories')->with('success', 'Category is successfully deleted');
+        return  redirect('/admin/cat')->with('success', 'Category is successfully deleted');
     }
 }
