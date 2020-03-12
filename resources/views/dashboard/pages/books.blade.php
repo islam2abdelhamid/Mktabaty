@@ -102,9 +102,9 @@
                             <div class="table-responsive">
                                 @if(session()->get('success'))
     <div class="alert alert-success">
-      {{ session()->get('success') }}
+        {{ session()->get('success') }}
     </div><br />
-  @endif
+    @endif
                                 <table class="table">
 
                                     <tbody>
@@ -117,7 +117,7 @@
                                             <td>
                                                 <button class="btn btn-success btn-sm" data-toggle="modal"
                                                     data-target="#editcat" >Edit</button>
-                                                   
+                                                
                                                     {{-- <br> --}}
                                                     <form action="{{ route('cat.destroy', $category->id)}}" method="post">
                                                         @csrf
@@ -150,12 +150,13 @@
                         <h4 class="card-title">Book Form</h4>
                     </div>
                     <div class="card-body modal-body">
-                        <form>
+                        <form method="POST" action="{{ url('books/') }}" enctype="multipart/form-data">
+                            @csrf
                             <div class="row">
                                 <div class="col-md-10">
                                     <div class="form-group">
                                         <label class="bmd-label-floating">Title</label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" name="title">
                                     </div>
                                 </div>
                             </div>
@@ -163,7 +164,7 @@
                                 <div class="col-md-8">
                                     <div class="form-group">
                                         <label class="bmd-label-floating">Author</label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" name="auther">
                                     </div>
                                 </div>
                             </div>
@@ -172,11 +173,11 @@
                                     <div class="form-group">
                                         <div class="input-group mt-4">
                                             <label class="bmd-label-floating" for="inputGroupSelect01">Category</label>
-                                            <select class="custom-select form-control" id="inputGroupSelect01">
-                                                <option selected>Choose...</option>
-                                                <option value="1">Science Fiction</option>
-                                                <option value="2">Historical</option>
-                                                <option value="3">Literature</option>
+                                            <select class="custom-select form-control" id="inputGroupSelect01"  name="category">
+                                                <option value="">Choose...</option>
+                                                <option value="Science Fiction">Science Fiction</option>
+                                                <option value="Historical">Historical</option>
+                                                <option value="Literature">Literature</option>
                                             </select>
                                         </div>
                                     </div>
@@ -186,7 +187,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="bmd-label-floating">Price</label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" name="price">
                                     </div>
                                 </div>
                             </div>
@@ -194,7 +195,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="bmd-label-floating">Quantity</label>
-                                        <input type="number" class="form-control">
+                                        <input type="number" class="form-control" name="quantity">
                                     </div>
                                 </div>
                             </div>
@@ -203,8 +204,7 @@
                                     <div class="form-group">
                                         <label class="bmd-label-floating">Upload Picture</label>
                                         <div class="custom-file">
-                                            <input type="file" class="form-control custom-file-input"
-                                                id="inputGroupFile01">
+                                            <input type="file" class="form-control custom-file-input" id="inputGroupFile01" name="image">
                                             <label class="form-control custom-file-label" for="inputGroupFile01">Choose
                                                 file</label>
                                         </div>
@@ -285,7 +285,7 @@
 
                     <div class="card-body modal-body">
                         
-                         <form method="post" action="{{ route('cat.update',$category->id)}}"> 
+                        <form method="post" action="{{ route('cat.update',$category->id)}}"> 
                             @csrf
                             @method('PATCH')
 
@@ -293,7 +293,7 @@
 
 
                             @csrf
-                          
+                        
                             <div class="row">
                                 <div class="col-md-10">
                                     <div class="form-group">

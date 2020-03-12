@@ -69,3 +69,4 @@ Route::prefix('admin')->group(function () {
     Route::resource('cat', 'Admin\CategoryController');
 });
 
+Route::resource('books', 'BookController');
