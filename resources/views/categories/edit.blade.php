@@ -30,7 +30,7 @@
           <div class="form-group shadow-textarea">
 
 
-          <button type="submit" class="btn btn-success">Update Book</button>
+          <button type="submit" class="btn btn-success">Update Category</button>
           <div class="right">
             <button  class="btn btn-warning"> <a  href="/admin/categories">Back</a></button>
         </div>

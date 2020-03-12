@@ -100,20 +100,34 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
+                                @if(session()->get('success'))
+    <div class="alert alert-success">
+        {{ session()->get('success') }}
+    </div><br />
+    @endif
                                 <table class="table">
 
                                     <tbody>
-
+                                    @foreach ($categories as $category)
+    
                                         <tr>
                                             <td>
-                                                title
+                                                {{$category->name}}
                                             </td>
                                             <td>
                                                 <button class="btn btn-success btn-sm" data-toggle="modal"
-                                                    data-target="#categoryModal">Edit</button>
-                                                <button class="btn btn-danger btn-sm">Delete</button>
+                                                    data-target="#editcat" >Edit</button>
+                                                
+                                                    {{-- <br> --}}
+                                                    <form action="{{ route('cat.destroy', $category->id)}}" method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                <button type ="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                </form>
                                             </td>
                                         </tr>
+                                        @endforeach
+
 
                                     </tbody>
                                 </table>
@@ -194,6 +208,7 @@
                                             <label class="form-control custom-file-label" for="inputGroupFile01">Choose
                                                 file</label>
                                         </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -219,17 +234,36 @@
                     <div class="card-header card-header-primary modal-header">
                         <h4 class="card-title">Category Form</h4>
                     </div>
+
                     <div class="card-body modal-body">
-                        <form method="post" action="{{ route('categories.store') }}">
+                        {{-- @if (!isset($category->id))
+                        
+                        <form method="post" action="{{ route('cat.update',$category->id)}}">
                             @csrf
+                            @method('PATCH')
+
+                            <button type="submit" class="btn btn-primary pull-right">Edit</button>
+
+                        @else --}}
+
+                        <form method="post" action="{{ route('cat.store') }}">
+
+                            @csrf
+                            {{-- <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <input type="hidden" name="_method" value="PUT"> --}}
+
+                        {{-- @endif --}}
+
                             <div class="row">
                                 <div class="col-md-10">
                                     <div class="form-group">
                                         <label class="bmd-label-floating">Category Name</label>
-                                        <input type="text" class="form-control" name="name" />
+                                        <input type="text" class="form-control"name="name"  />
+                                    
                                     </div>
                                 </div>
                             </div>
+                            
                             <div class="row justify-content-end">
                                 <button type="submit" class="btn btn-primary pull-right">Add</button>
                             </div>
@@ -241,6 +275,45 @@
         </div>
 
         <!-- End Category Modal -->
+
+        <div class="col-md-12 modal fade" role="dialog" id="editcat">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="col-md-10 modal-content card">
+                    <div class="card-header card-header-primary modal-header">
+                        <h4 class="card-title">Category Form</h4>
+                    </div>
+
+                    <div class="card-body modal-body">
+                        
+                        <form method="post" action="{{ route('cat.update',$category->id)}}"> 
+                            @csrf
+                            @method('PATCH')
+
+
+
+
+                            @csrf
+                        
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Category Name</label>
+                                        <input type="text" class="form-control"name="name" value="{{$category->name}}" />
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row justify-content-end">
+                                <button type="submit" class="btn btn-primary pull-right">Edit</button>
+                            </div>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     </div>
 </div>

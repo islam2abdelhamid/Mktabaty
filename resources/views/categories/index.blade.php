@@ -1,4 +1,4 @@
-{{-- @section('content') --}}
+@section('content')
 <!DOCTYPE html>
 <html>
 
@@ -29,7 +29,8 @@
         <tr>
             <td>{{$category->name}}</td>
 
-            <td><a href="{{ route('categories.edit',$category->id)}}" class="btn btn-info"><i class="far fa-edit"></i>Edit</a></td>
+            <td><a href="{{ route('categories.edit',$category->id)}}" class="btn btn-info">
+              <i class="far fa-edit"></i>Edit</a></td>
             <td>
                 <form action="{{ route('categories.destroy', $category->id)}}" method="post">
                   @csrf
