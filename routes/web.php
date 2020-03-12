@@ -44,22 +44,22 @@ Route::get('/register', function () {
 });
 
 
-Route::get('/admin', function () {
-    return view('dashboard.pages.admins');
-});
-
-Route::get('/admin/cat', function () {
-    return view('dashboard.pages.books');
-});
-
-Route::get('/admin/books', function () {
-    return view('dashboard.pages.index');
-});
-
-Route::get('/admin/users', function () {
-    return view('dashboard.pages.users');
-});
-
 Route::prefix('admin')->group(function () {
     Route::resource('categories', 'Admin\CategoryController');
+
+    Route::get('/', ['name' => 'admin.index', 'uses' => function () {
+        return view('dashboard.pages.index');
+    }]);
+
+    Route::get('/books', function () {
+        return view('dashboard.pages.books');
+    });
+
+    Route::get('/users', function () {
+        return view('dashboard.pages.users');
+    });
+
+    Route::get('/admins', function () {
+        return view('dashboard.pages.admins');
+    });
 });
