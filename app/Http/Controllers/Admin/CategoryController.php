@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Category;
+use App\Book;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 class CategoryController extends Controller
@@ -14,9 +15,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $books = Book::all();
         $categories=Category::all();
-        return view('dashboard.pages.books', compact('categories'))->with('categories', $categories);
+        return view('dashboard.pages.books')->with('categories', $categories)->with('books', $books);
         }
 
     /**
@@ -39,13 +40,13 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
-      $validatedData=  $request->validate([
+        $validatedData=  $request->validate([
             'name'=>'required|max:255|unique:categories|string'
         ]);
-    
-    
+
+
     $category=Category::create($validatedData);
-   
+
     return redirect('/admin/cat')->with('sucess','Category is successfully saved');
     }
 
@@ -76,7 +77,7 @@ class CategoryController extends Controller
         $category->fill($request->all());
         $category->save();
         return view('dashboard.pages.books', compact('category'));
-        
+
     }
 
     /**
@@ -89,15 +90,15 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         //
-        
+
         $validatedData=  $request->validate([
             'name'=>'required|max:255|unique:categories|string'
         ]);
-    
-    
+
+
         Category::whereId($id)->update($validatedData);
 
-        return redirect('/admin/cat')->with('success', 'Category is successfully updated');    
+        return redirect('/admin/cat')->with('success', 'Category is successfully updated');
 
     }
 

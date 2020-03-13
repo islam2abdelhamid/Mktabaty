@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
@@ -8,7 +9,6 @@ use Illuminate\Validation\Rule;
 use App\Book;
 use App\Category;
 use SebastianBergmann\Environment\Console;
-use Redirect;
 
 class BookController extends Controller
 {
@@ -20,7 +20,6 @@ class BookController extends Controller
     public function index()
     {
         $books = new Book;
-
         $books=DB::table('books')
                 ->select('id','title', 'auther','price','quantity','avaliable')
                 ->get();
@@ -51,6 +50,7 @@ class BookController extends Controller
             'auther' => 'required',
             'price' => 'required',
             'quantity' => 'required',
+            // 'avaliable' => 'required',
             'image' =>'required|image|mimes:jpeg,png,jpg,svg',
         ]);
 
@@ -68,18 +68,23 @@ class BookController extends Controller
         request()->image->move(public_path('images'), $imageName);
 
         $book = new Book;
-
         $book->title = $request->title;
         $book->auther = $request->auther;
-        $book->categorie_id = 1;
+        $book->categorie_id = $categoryId;
         $book->price = $request->price;
         $book->quantity = $request->quantity;
         $book->avaliable = $request->quantity;
         $book->image = $imageName;
-
         $book->save();
 
-        return back();
+        // DB::table('books')
+        //     ->where('id', $request->id)
+        //     ->insert(['title' => $request->title, 'auther' => $request->auther,
+        //         'categorie_id' => $categoryId, 'price' => $request->price,
+        //         'quantity' => $request->quantity, 'avaliable' => $request->quantity,
+        //         'image' => $imageName]);
+
+        return back()->with('message', 'Book added successfully');
     }
 
     /**
@@ -101,7 +106,7 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -111,9 +116,39 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required',
+            'auther' => 'required',
+            // 'categorie_id' => 'required',
+            'price' => 'required',
+            'quantity' => 'required',
+            'image' =>'image|mimes:jpeg,png,jpg,svg',
+        ]);
+
+        $categories = new Category;
+
+        $categories=DB::table('categories')
+                    ->select('id')
+                    ->where('name', '=', $request->get('category'))
+                    ->get();
+        foreach($categories as $category) {
+            $categoryId =  $category->id;
+        }
+
+        if (request()->image != null) {
+            $imageName = time().'.'.request()->image->getClientOriginalExtension();
+            request()->image->move(public_path('images'), $imageName);
+        }
+
+        DB::table('books')
+            ->where('id', $request->id)
+            ->update(['title' => $request->title, 'auther' => $request->auther,
+                'categorie_id' => $categoryId, 'price' => $request->price,
+                'quantity' => $request->quantity, 'avaliable' => $request->avaliable]);
+
+        return back()->with('message', 'Book updated successfully');
     }
 
     /**
@@ -128,6 +163,7 @@ class BookController extends Controller
             ->where('id', '=', $id)
             ->delete();
 
-        // return Redirect::to('books');
+        return back()->with('message', 'Book deleted successfully');
     }
 }
+
