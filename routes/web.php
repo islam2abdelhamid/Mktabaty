@@ -21,6 +21,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('admin', 'AdminController@listAdmins')->name('listUsers')->middleware(['auth']);
+Route::get('admin/users', 'AdminController@listUsers')->name('listUsers')->middleware(['auth']);
+Route::get('admin/admins', 'AdminController@listAdmins')->name('listAdmins')->middleware(['auth']);
+
+
 Route::get('/', function () {
     return view('mktabaty.pages.books.index');
 });
@@ -49,9 +54,9 @@ Route::get('/book', function () {
 // });
 
 
-Route::get('/admin', function () {
-    return view('dashboard.pages.admins');
-});
+// Route::get('/admin', function () {
+//     return view('dashboard.pages.admins');
+// });
 
 Route::get('/admin/cat', function () {
     return view('dashboard.pages.books');
@@ -61,9 +66,9 @@ Route::get('/admin/books', function () {
     return view('dashboard.pages.index');
 });
 
-Route::get('/admin/users', function () {
-    return view('dashboard.pages.users');
-});
+// Route::get('/admin/users', function () {
+//     return view('dashboard.pages.users');
+// });
 
 Route::prefix('admin')->group(function () {
     Route::resource('cat', 'Admin\CategoryController');
