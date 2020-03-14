@@ -24,6 +24,7 @@ Auth::routes();
 Route::get('admin', 'AdminController@listAdmins')->name('listUsers')->middleware(['auth']);
 Route::get('admin/users', 'AdminController@listUsers')->name('listUsers')->middleware(['auth']);
 Route::get('admin/admins', 'AdminController@listAdmins')->name('listAdmins')->middleware(['auth']);
+Route::get('admin/dashboard', 'AdminController@index')->name('dashboard');
 
 
 Route::get('/', function () {
@@ -62,9 +63,6 @@ Route::get('/admin/cat', function () {
     return view('dashboard.pages.books');
 });
 
-Route::get('/admin/books', function () {
-    return view('dashboard.pages.index');
-});
 
 // Route::get('/admin/users', function () {
 //     return view('dashboard.pages.users');
