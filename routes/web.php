@@ -51,9 +51,8 @@ Route::prefix('admin')->group(function () {
         return view('dashboard.pages.index');
     }]);
 
-    Route::get('/books', function () {
-        return view('dashboard.pages.books');
-    });
+    Route::resource('books', 'Admin\BookController');
+
 
     Route::get('/users', function () {
         return view('dashboard.pages.users');
