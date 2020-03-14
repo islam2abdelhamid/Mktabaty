@@ -15,6 +15,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', function () {
+    return view('welcome');
+})->middleware(['auth']);
+
+Auth::routes();
+
+Route::get('admin', 'AdminController@listAdmins')->name('listUsers')->middleware(['auth']);
+Route::get('admin/users', 'AdminController@listUsers')->name('listUsers')->middleware(['auth']);
+Route::get('admin/admins', 'AdminController@listAdmins')->name('listAdmins')->middleware(['auth']);
+
 
 Route::get('/', function () {
     return view('mktabaty.pages.books.index');
@@ -34,18 +44,19 @@ Route::get('/book', function () {
     return view('mktabaty.pages.books.book');
 });
 
-Route::get('/login', function () {
-    return view('mktabaty.pages.user.login');
-});
+// Route::get('/login', function () {
+//     return view('mktabaty.pages.user.login');
+// });
 
 
-Route::get('/register', function () {
-    return view('mktabaty.pages.user.register');
-});
+// Route::get('/register', function () {
+//     return view('mktabaty.pages.user.register');
+// });
 
 
-Route::prefix('admin')->group(function () {
-    Route::resource('categories', 'Admin\CategoryController');
+// Route::get('/admin', function () {
+//     return view('dashboard.pages.admins');
+// });
 
     Route::get('/', ['name' => 'admin.index', 'uses' => function () {
         return view('dashboard.pages.index');
@@ -53,12 +64,12 @@ Route::prefix('admin')->group(function () {
 
     Route::resource('books', 'Admin\BookController');
 
+// Route::get('/admin/users', function () {
+//     return view('dashboard.pages.users');
+// });
 
-    Route::get('/users', function () {
-        return view('dashboard.pages.users');
-    });
-
-    Route::get('/admins', function () {
-        return view('dashboard.pages.admins');
-    });
+Route::prefix('admin')->group(function () {
+    Route::resource('cat', 'Admin\CategoryController');
 });
+
+Route::resource('books', 'Admin\BookController');
