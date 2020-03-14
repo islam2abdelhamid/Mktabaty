@@ -31,28 +31,60 @@
                                 </th>
                             </thead>
                             <tbody>
-                                @forelse ($users as $user)
-                                    <tr>
-                                        <td>
-                                            {{$user->id}}
-                                        </td>
-                                        <td>
-                                            {{$user->username}}
-                                        </td>
-                                        <td>
-                                            {{$user->email}}
-                                        </td>
-                                        <td>
-                                            <input type="checkbox"  {{$user->isActive?'checked':''}} data-toggle="toggle" data-onstyle="success"
-                                                data-size="sm">
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-danger btn-sm">Remove</button>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <p>No users</p>
-                                @endforelse
+                                <tr>
+                                    <td>
+                                        1
+                                    </td>
+                                    <td>
+                                        Dakota Rice
+                                    </td>
+                                    <td>
+                                        Dakota@niger.com
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" checked data-toggle="toggle" data-onstyle="success"
+                                            data-size="sm">
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-danger btn-sm">Remove</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        2
+                                    </td>
+                                    <td>
+                                        Minerva Hooper
+                                    </td>
+                                    <td>
+                                        Minerva@niger.com
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" checked data-toggle="toggle" data-onstyle="success"
+                                            data-size="sm">
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-danger btn-sm">Remove</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        3
+                                    </td>
+                                    <td>
+                                        Sage Rodriguez
+                                    </td>
+                                    <td>
+                                        Minerva@niger.com
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" checked data-toggle="toggle" data-onstyle="success"
+                                            data-size="sm">
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-danger btn-sm">Remove</button>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>

@@ -34,24 +34,34 @@
                                     </th>
                                 </thead>
                                 <tbody>
-                                    @forelse ($users as $user)
                                     <tr>
                                         <td>
-                                            {{$user->id}}
+                                            1
                                         </td>
                                         <td>
-                                            {{$user->username}}
+                                            Dakota Rice
                                         </td>
                                         <td>
-                                            {{$user->email}}
+                                            Rice@gmail.com
                                         </td>
                                         <td>
-                                            <button class="btn btn-danger btn-sm">Remove</button>
+                                            <button class="btn btn-danger btn-sm">Delete</button>
                                         </td>
                                     </tr>
-                                @empty
-                                    <p>No users</p>
-                                @endforelse
+                                    <tr>
+                                        <td>
+                                            2
+                                        </td>
+                                        <td>
+                                            Doris Greene
+                                        </td>
+                                        <td>
+                                            Malawi@yahoo.com
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-danger btn-sm">Delete</button>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

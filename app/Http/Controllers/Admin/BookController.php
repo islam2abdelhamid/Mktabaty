@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -9,6 +10,7 @@ use Illuminate\Validation\Rule;
 use App\Book;
 use App\Category;
 use SebastianBergmann\Environment\Console;
+
 
 class BookController extends Controller
 {
@@ -20,11 +22,11 @@ class BookController extends Controller
     public function index()
     {
         $books = new Book;
-        $books=DB::table('books')
-                ->select('id','title', 'auther','price','quantity','avaliable')
-                ->get();
+        $books = DB::table('books')
+            ->select('id', 'title', 'auther', 'price', 'quantity', 'avaliable')
+            ->get();
 
-        return view('showBooks', ['books'=>$books]);
+        return view('showBooks', ['books' => $books]);
     }
 
     /**
@@ -51,20 +53,20 @@ class BookController extends Controller
             'price' => 'required',
             'quantity' => 'required',
             // 'avaliable' => 'required',
-            'image' =>'required|image|mimes:jpeg,png,jpg,svg',
+            'image' => 'required|image|mimes:jpeg,png,jpg,svg',
         ]);
 
         $categories = new Category;
 
-        $categories=DB::table('categories')
-                    ->select('id')
-                    ->where('name', '=', $request->get('category'))
-                    ->get();
-        foreach($categories as $category) {
+        $categories = DB::table('categories')
+            ->select('id')
+            ->where('name', '=', $request->get('category'))
+            ->get();
+        foreach ($categories as $category) {
             $categoryId =  $category->id;
         }
 
-        $imageName = time().'.'.request()->image->getClientOriginalExtension();
+        $imageName = time() . '.' . request()->image->getClientOriginalExtension();
         request()->image->move(public_path('images'), $imageName);
 
         $book = new Book;
@@ -106,7 +108,6 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-
     }
 
     /**
@@ -124,29 +125,31 @@ class BookController extends Controller
             // 'categorie_id' => 'required',
             'price' => 'required',
             'quantity' => 'required',
-            'image' =>'image|mimes:jpeg,png,jpg,svg',
+            'image' => 'image|mimes:jpeg,png,jpg,svg',
         ]);
 
         $categories = new Category;
 
-        $categories=DB::table('categories')
-                    ->select('id')
-                    ->where('name', '=', $request->get('category'))
-                    ->get();
-        foreach($categories as $category) {
+        $categories = DB::table('categories')
+            ->select('id')
+            ->where('name', '=', $request->get('category'))
+            ->get();
+        foreach ($categories as $category) {
             $categoryId =  $category->id;
         }
 
         if (request()->image != null) {
-            $imageName = time().'.'.request()->image->getClientOriginalExtension();
+            $imageName = time() . '.' . request()->image->getClientOriginalExtension();
             request()->image->move(public_path('images'), $imageName);
         }
 
         DB::table('books')
             ->where('id', $request->id)
-            ->update(['title' => $request->title, 'auther' => $request->auther,
+            ->update([
+                'title' => $request->title, 'auther' => $request->auther,
                 'categorie_id' => $categoryId, 'price' => $request->price,
-                'quantity' => $request->quantity, 'avaliable' => $request->avaliable]);
+                'quantity' => $request->quantity, 'avaliable' => $request->avaliable
+            ]);
 
         return back()->with('message', 'Book updated successfully');
     }
@@ -165,5 +168,30 @@ class BookController extends Controller
 
         return back()->with('message', 'Book deleted successfully');
     }
-}
 
+
+    public function categoryBooks($id)
+    {
+        $active = $id;
+        
+        $books = Book::orderBy('id', 'desc')->where('categorie_id', $id)->paginate(3);
+        
+        $bookCategories = Category::all();
+
+
+        return view('mktabaty.pages.books.Categoriesbooks', compact('books', 'bookCategories', 'active'));
+    }
+
+    public function webBooks()
+    {
+        $active = null;
+        $bookCategories = Category::all();
+        $category  = Category::orderBy('created_at', 'asc')->first();
+        if (isset($category)) {
+            $active = $category->id;
+        }
+        $books = Book::orderBy('id', 'desc')->where('categorie_id', $active)->paginate(3);
+
+        return view('mktabaty/pages/books/index', compact('bookCategories', 'books', 'active'));
+    }
+}
