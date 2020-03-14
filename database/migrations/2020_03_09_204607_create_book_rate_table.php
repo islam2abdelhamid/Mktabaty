@@ -13,7 +13,7 @@ class CreateBookRateTable extends Migration
      */
     public function up()
     {
-        Schema::create('book_rate', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->unsignedBigInteger('book_id');
             $table->unsignedBigInteger('user_id');
             $table->timestamp('rated_at');

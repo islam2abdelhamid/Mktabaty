@@ -70,6 +70,11 @@ Route::get('/admin/cat', function () {
 
 Route::prefix('admin')->group(function () {
     Route::resource('cat', 'Admin\CategoryController');
-});
-
 Route::resource('books', 'Admin\BookController');
+
+});
+// Route::resource('cat', 'Admin\CategoryController');
+
+Route::get('/getBooks/{id}/', 'Admin\BookController@categoryBooks')->name('getBooks');
+Route::get('/', 'Admin\BookController@webBooks');
+

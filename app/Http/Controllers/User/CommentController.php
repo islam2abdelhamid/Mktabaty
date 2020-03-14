@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
-use App\Category;
-use App\Book;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Egulias\EmailValidator\Warning\Comment;
 
-class CategoryController extends Controller
+class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +17,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $books = Book::all();
-        $categories=Category::all();
-        return view('dashboard.pages.books')->with('categories', $categories)->with('books', $books);
-        }
+        //
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -29,7 +28,6 @@ class CategoryController extends Controller
     public function create()
     {
         //
-        return view('categories.create');
     }
 
     /**
@@ -40,15 +38,25 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $validatedData=  $request->validate([
-            'name'=>'required|max:255|unique:categories|string'
+    
+
+
+        $validator = $request->validate([
+            'comment' => 'required|min:20|max:255',
+            'rating' => 'required',
         ]);
+        // !this will be the actual userId
+        $userid = Auth()->user()->id;
+        $comment = $request->get('comment');
+        $bookid = $request->get('book_id');
+        $rating = $request->get('rate');
+        DB::table('comment')->insert(
+            ['comment' => $comment, 'rate' => $rating, 'user_id' => $userid, 'book_id' => $bookid]
+        );
+
+        return redirect('' . $bookid);
 
 
-    $category=Category::create($validatedData);
-
-    return redirect('/admin/cat')->with('sucess','Category is successfully saved');
     }
 
     /**
@@ -70,15 +78,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-
-        //will retrieve the first result of the query; however, if no result is found;
-        // $category= Category::findOrFail($id);
-
-        $category = Category::findOrNew($id);
-        $category->fill($request->all());
-        $category->save();
-        return view('dashboard.pages.books', compact('category'));
-
+        //
     }
 
     /**
@@ -91,16 +91,6 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         //
-
-        $validatedData=  $request->validate([
-            'name'=>'required|max:255|unique:categories|string'
-        ]);
-
-
-        Category::whereId($id)->update($validatedData);
-
-        return redirect('/admin/cat')->with('success', 'Category is successfully updated');
-
     }
 
     /**
@@ -112,9 +102,10 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         //
-        $category = Category::findOrFail($id);
-        $category->delete();
-
-        return  redirect('/admin/cat')->with('success', 'Category is successfully deleted');
+        $comment = Comment::findOrFail($id);
+        if ($comment->user_id==Auth()->user()->id){
+            $comment->delete();
+        }
+        return  Redirect::back();
     }
 }
