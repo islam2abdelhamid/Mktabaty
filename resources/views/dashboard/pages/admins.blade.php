@@ -49,9 +49,9 @@
                                             <button class="btn btn-danger btn-sm">Remove</button>
                                         </td>
                                     </tr>
-                                @empty
+                                    @empty
                                     <p>No users</p>
-                                @endforelse
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
@@ -75,7 +75,10 @@
                                         <div class="input-group mt-4">
                                             <label class="bmd-label-floating" for="inputGroupSelect01">Select User To be
                                                 Admin</label>
-                                            <select class="custom-select form-control" id="inputGroupSelect01">
+                                            <select class="custom-select form-control" style="color: #fff;
+                                            border: 1px solid #aaa;
+                                            background: #20293f;
+                                            padding: 5px;" id="inputGroupSelect01">
                                                 <option selected>User1</option>
                                                 <option value="1">User2</option>
                                                 <option value="2">User3</option>

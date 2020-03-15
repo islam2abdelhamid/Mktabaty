@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return view('welcome');
-})->middleware(['auth']);
+// Route::get('/', function () {
+//     return view('welcome');
+// })->middleware(['auth']);
 
 Auth::routes();
 
@@ -58,18 +58,20 @@ Route::get('/book', function () {
 //     return view('dashboard.pages.admins');
 // });
 
-    Route::get('/', ['name' => 'admin.index', 'uses' => function () {
-        return view('dashboard.pages.index');
-    }]);
+// Route::get('/', ['name' => 'admin.index', 'uses' => function () {
+//     return view('dashboard.pages.index');
+// }]);
 
-    Route::resource('books', 'Admin\BookController');
+Route::resource('books', 'Admin\BookController');
 
 // Route::get('/admin/users', function () {
 //     return view('dashboard.pages.users');
 // });
 
 Route::prefix('admin')->group(function () {
-    Route::resource('cat', 'Admin\CategoryController');
+    Route::resource('books', 'Admin\BookController');
+
+    Route::resource('category', 'Admin\CategoryController');
 });
 
 Route::resource('books', 'Admin\BookController');

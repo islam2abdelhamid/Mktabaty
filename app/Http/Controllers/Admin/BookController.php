@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,12 +20,10 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = new Book;
-        $books=DB::table('books')
-                ->select('id','title', 'auther','price','quantity','avaliable')
-                ->get();
+        $books = Book::all();
+        $categories = Category::all();
 
-        return view('showBooks', ['books'=>$books]);
+        return view('dashboard.pages.books.index', ['books' => $books, 'categories' => $categories]);
     }
 
     /**
@@ -45,44 +44,27 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $request->validate([
             'title' => 'required',
-            'auther' => 'required',
+            'author' => 'required',
             'price' => 'required',
             'quantity' => 'required',
-            // 'avaliable' => 'required',
-            'image' =>'required|image|mimes:jpeg,png,jpg,svg',
+            'image' => 'required|image|mimes:jpeg,png,jpg,svg',
         ]);
 
-        $categories = new Category;
 
-        $categories=DB::table('categories')
-                    ->select('id')
-                    ->where('name', '=', $request->get('category'))
-                    ->get();
-        foreach($categories as $category) {
-            $categoryId =  $category->id;
-        }
-
-        $imageName = time().'.'.request()->image->getClientOriginalExtension();
+        $imageName = time() . '.' . request()->image->getClientOriginalExtension();
         request()->image->move(public_path('images'), $imageName);
 
         $book = new Book;
         $book->title = $request->title;
-        $book->auther = $request->auther;
-        $book->categorie_id = $categoryId;
+        $book->author = $request->author;
+        $book->category_id = $request->category_id;
         $book->price = $request->price;
         $book->quantity = $request->quantity;
-        $book->avaliable = $request->quantity;
+        $book->available = $request->quantity;
         $book->image = $imageName;
         $book->save();
-
-        // DB::table('books')
-        //     ->where('id', $request->id)
-        //     ->insert(['title' => $request->title, 'auther' => $request->auther,
-        //         'categorie_id' => $categoryId, 'price' => $request->price,
-        //         'quantity' => $request->quantity, 'avaliable' => $request->quantity,
-        //         'image' => $imageName]);
 
         return back()->with('message', 'Book added successfully');
     }
@@ -106,7 +88,9 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-
+        $categories = Category::all();
+        $book = Book::find($id);
+        return view('dashboard.pages.books.edit-book', ['book' => $book, 'categories' => $categories]);
     }
 
     /**
@@ -116,38 +100,34 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, Book $book)
     {
-        $validatedData = $request->validate([
+
+        print_r($book);
+        $request->validate([
             'title' => 'required',
-            'auther' => 'required',
-            // 'categorie_id' => 'required',
+            'author' => 'required',
+            'category_id' => 'required',
             'price' => 'required',
             'quantity' => 'required',
-            'image' =>'image|mimes:jpeg,png,jpg,svg',
+            'image' => 'image|mimes:jpeg,png,jpg,svg',
         ]);
 
-        $categories = new Category;
 
-        $categories=DB::table('categories')
-                    ->select('id')
-                    ->where('name', '=', $request->get('category'))
-                    ->get();
-        foreach($categories as $category) {
-            $categoryId =  $category->id;
-        }
+        $book->title = $request->title;
+        $book->author = $request->author;
+        $book->category_id = $request->category_id;
+        $book->price = $request->price;
+        $book->quantity = $request->quantity;
+        $book->available = $request->quantity;
+
 
         if (request()->image != null) {
-            $imageName = time().'.'.request()->image->getClientOriginalExtension();
+            $imageName = time() . '.' . request()->image->getClientOriginalExtension();
             request()->image->move(public_path('images'), $imageName);
+            $book->image = $imageName;
         }
-
-        DB::table('books')
-            ->where('id', $request->id)
-            ->update(['title' => $request->title, 'auther' => $request->auther,
-                'categorie_id' => $categoryId, 'price' => $request->price,
-                'quantity' => $request->quantity, 'avaliable' => $request->avaliable]);
-
+        $book->save();
         return back()->with('message', 'Book updated successfully');
     }
 
@@ -166,4 +146,3 @@ class BookController extends Controller
         return back()->with('message', 'Book deleted successfully');
     }
 }
-
