@@ -16,11 +16,8 @@
   <!-- CSS Files -->
   <link href={{asset("assets/admin/css/material-dashboard.css?v=2.1.0")}} rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
-<<<<<<< HEAD
   <link href="../assets/admin/demo/demo.css" rel="stylesheet" />
   <!-- CSS Just for chart.js package -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css">
-=======
   <link href={{asset("assets/admin/demo/demo.css")}} rel="stylesheet" />
->>>>>>> 1cc762d8deae98831e2f481e9c7ed7a56287fb0b
 </head>
