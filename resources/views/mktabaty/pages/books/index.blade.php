@@ -1,15 +1,18 @@
 @extends('mktabaty.layouts.home')
 @section('content')
 <div class="col-md-4 mt-4">
+  @foreach ($books as $book)
   <div class="card">
-
-    <img class="card-img-top" src="assets/user/images/got.jpg" alt="book image" height="250px" />
+    {{$book}}
+    <img class="card-img-top" src={{asset("images/".$book->image)}} alt="book image" height="250px" />
 
     <div class="card-body">
       <div class="d-flex justify-content-between">
         <h4 class="card-title">
-          <a href="/book" class="no-decoration">Book Title</a>
+          <a href="/book" class="no-decoration">{{$book->title}}</a>
         </h4>
+        <span class="text-secondary d-flex ">{{$book->author}}</span>
+
         <i class="fa fa-heart-o fa-pull-right mb-3" aria-hidden="true"></i>
 
       </div>
@@ -34,6 +37,7 @@
     </div>
 
   </div>
+  @endforeach
 </div>
 
 @stop

@@ -27,8 +27,8 @@
                     <p>Admins</p>
                 </a>
             </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="./books.html">
+            <li class="{{ Request::is('admin/books') ? 'nav-item active' : 'nav-item' }}">
+                <a class="nav-link" href={{ url('/admin/books') }}>
                     <i class="material-icons">content_paste</i>
                     <p>Books</p>
                 </a>

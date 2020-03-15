@@ -1,9 +1,8 @@
-
 @include('mktabaty.includes.header')
 
-<div class="page-title text-center">
+{{-- <div class="page-title text-center">
     @yield('title')
-</div>
+</div> --}}
 
 <div class="container-fluid mt-5">
     <div class="row">

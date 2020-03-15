@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return view('welcome');
-})->middleware(['auth']);
+// Route::get('/', function () {
+//     return view('welcome');
+// })->middleware(['auth']);
 
 Auth::routes();
 
@@ -27,9 +27,8 @@ Route::get('admin/admins', 'AdminController@listAdmins')->name('listAdmins')->mi
 Route::get('admin/dashboard', 'AdminController@index')->name('dashboard');
 
 
-Route::get('/', function () {
-    return view('mktabaty.pages.books.index');
-});
+Route::get('/', 'Admin\BookController@index');
+
 
 Route::get('/favorites', function () {
     return view('mktabaty.pages.books.favorites');
@@ -59,9 +58,9 @@ Route::get('/book', function () {
 //     return view('dashboard.pages.admins');
 // });
 
-Route::get('/admin/cat', function () {
-    return view('dashboard.pages.books');
-});
+// Route::get('/', ['name' => 'admin.index', 'uses' => function () {
+//     return view('dashboard.pages.index');
+// }]);
 
 
 // Route::get('/admin/users', function () {
@@ -69,12 +68,16 @@ Route::get('/admin/cat', function () {
 // });
 
 Route::prefix('admin')->group(function () {
+    Route::resource('books', 'Admin\BookController');
+
+    Route::resource('category', 'Admin\CategoryController');
     Route::resource('cat', 'Admin\CategoryController');
+    Route::resource('books', 'Admin\BookController');
+});
+
 Route::resource('books', 'Admin\BookController');
 
-});
 // Route::resource('cat', 'Admin\CategoryController');
 
 Route::get('/getBooks/{id}/', 'Admin\BookController@categoryBooks')->name('getBooks');
 Route::get('/', 'Admin\BookController@webBooks');
-
