@@ -45,7 +45,7 @@
                                     <td>
                                         <div class="form-check form-check-inline">
                                             <label class="form-check-label">
-                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                                <input class="form-check-input"  {{$user->isActive?'checked':''}}  type="checkbox" id="inlineCheckbox1" value="option1">
                                                 <span class="form-check-sign">
                                                     <span class="check"></span>
                                                 </span>

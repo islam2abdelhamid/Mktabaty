@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\BookLeaseController;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -34,6 +35,7 @@ class AdminController extends Controller
      */
     public function listUsers()
     {
+        //$this->authorize('view', User::class);
         $users = new User;
 
         $users=DB::table('users')
@@ -44,6 +46,7 @@ class AdminController extends Controller
     }
     public function listAdmins()
     {
+        //$this->authorize('view', User::class);
         $users = new User;
 
         $users=DB::table('users')
