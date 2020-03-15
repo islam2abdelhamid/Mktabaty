@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
-use App\User;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\BookLeaseController;
+use App\Http\Controllers\Controller;
+use Egulias\EmailValidator\Warning\Comment;
 
-class AdminController extends Controller
+class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,35 +17,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $data = BookLeaseController::getDataForChart();
-        return $data;
-        // return view('dashboard.pages.index');
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function listUsers()
-    {
-        $users = new User;
-
-        $users=DB::table('users')
-                ->select('id','username', 'email','isActive')
-                ->where('isAdmin',0)
-                ->get();
-        return view('dashboard.pages.users', ['users'=>$users]);
-    }
-    public function listAdmins()
-    {
-        $users = new User;
-
-        $users=DB::table('users')
-                ->select('id','username', 'email','isActive')
-                ->where('isAdmin',1)
-                ->get();
-        return view('dashboard.pages.admins', ['users'=>$users]);
+        //
     }
 
     /**
@@ -57,7 +30,6 @@ class AdminController extends Controller
         //
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -66,7 +38,25 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+    
+
+
+        $validator = $request->validate([
+            'comment' => 'required|min:20|max:255',
+            'rating' => 'required',
+        ]);
+        // !this will be the actual userId
+        $userid = Auth()->user()->id;
+        $comment = $request->get('comment');
+        $bookid = $request->get('book_id');
+        $rating = $request->get('rate');
+        DB::table('comment')->insert(
+            ['comment' => $comment, 'rate' => $rating, 'user_id' => $userid, 'book_id' => $bookid]
+        );
+
+        return redirect('' . $bookid);
+
+
     }
 
     /**
@@ -112,5 +102,10 @@ class AdminController extends Controller
     public function destroy($id)
     {
         //
+        $comment = Comment::findOrFail($id);
+        if ($comment->user_id==Auth()->user()->id){
+            $comment->delete();
+        }
+        return  Redirect::back();
     }
 }

@@ -9,20 +9,20 @@
         </a></div>
     <div class="sidebar-wrapper">
         <ul class="nav">
-            <li class="{{ Request::is('admin') ? 'nav-item active' : 'nav-item' }}">
-                <a class="nav-link" href={{ url('/admin') }}>
+            <li class="nav-item  ">
+                <a class="nav-link" href="{{ route('dashboard') }}"> 
                     <i class="material-icons">dashboard</i>
                     <p>Dashboard</p>
                 </a>
             </li>
-            <li class="{{ Request::is('admin/users') ? 'nav-item active' : 'nav-item' }}">
-                <a class="nav-link" href={{{ url('/admin/users') }}}>
+            <li class="nav-item ">
+                <a class="nav-link" href="{{ route('listUsers') }}">
                     <i class="material-icons">person</i>
                     <p>Users</p>
                 </a>
             </li>
-            <li class="{{ Request::is('admin/admins') ? 'nav-item active' : 'nav-item' }}">
-                <a class="nav-link" href={{ url('/admin/admins') }}>
+            <li class="nav-item active ">
+                <a class="nav-link" href="{{ route('listAdmins') }}">
                     <i class="material-icons">person</i>
                     <p>Admins</p>
                 </a>

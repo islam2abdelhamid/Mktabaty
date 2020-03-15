@@ -46,11 +46,13 @@
                                             {{$user->email}}
                                         </td>
                                         <td>
-                                            <button class="btn btn-danger btn-sm">Remove</button>
+                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-white btn-link btn-sm">
+                                                <i class="material-icons">close</i>
+                                            </button>
                                         </td>
                                     </tr>
                                     @empty
-                                    <p>No users</p>
+                                        <p>No users</p>
                                     @endforelse
                                 </tbody>
                             </table>

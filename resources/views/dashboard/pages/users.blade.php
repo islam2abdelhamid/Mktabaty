@@ -12,7 +12,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table center">
+                        <table class="table text-center">
                             <thead class=" text-primary">
                                 <th>
                                     ID
@@ -32,24 +32,32 @@
                             </thead>
                             <tbody>
                                 @forelse ($users as $user)
-                                    <tr>
-                                        <td>
-                                            {{$user->id}}
-                                        </td>
-                                        <td>
-                                            {{$user->username}}
-                                        </td>
-                                        <td>
-                                            {{$user->email}}
-                                        </td>
-                                        <td>
-                                            <input type="checkbox"  {{$user->isActive?'checked':''}} data-toggle="toggle" data-onstyle="success"
-                                                data-size="sm">
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-danger btn-sm">Remove</button>
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td>
+                                        {{$user->id}}
+                                    </td>
+                                    <td>
+                                        {{$user->username}}
+                                    </td>
+                                    <td>
+                                        {{$user->email}}
+                                    </td>
+                                    <td>
+                                        <div class="form-check form-check-inline">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                                <span class="form-check-sign">
+                                                    <span class="check"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="button" rel="tooltip" title="Remove" class="btn btn-white btn-link btn-sm">
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                    </td>
+                                </tr>
                                 @empty
                                     <p>No users</p>
                                 @endforelse

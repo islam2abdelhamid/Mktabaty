@@ -24,6 +24,7 @@ Auth::routes();
 Route::get('admin', 'AdminController@listAdmins')->name('listUsers')->middleware(['auth']);
 Route::get('admin/users', 'AdminController@listUsers')->name('listUsers')->middleware(['auth']);
 Route::get('admin/admins', 'AdminController@listAdmins')->name('listAdmins')->middleware(['auth']);
+Route::get('admin/dashboard', 'AdminController@index')->name('dashboard');
 
 
 Route::get('/', function () {
@@ -62,16 +63,28 @@ Route::get('/book', function () {
 //     return view('dashboard.pages.index');
 // }]);
 
+<<<<<<< HEAD
 Route::resource('books', 'Admin\BookController');
+=======
+>>>>>>> b9cd8b78362bdfd22ec1053fcc462f9f4c8718d0
 
 // Route::get('/admin/users', function () {
 //     return view('dashboard.pages.users');
 // });
 
 Route::prefix('admin')->group(function () {
+<<<<<<< HEAD
     Route::resource('books', 'Admin\BookController');
 
     Route::resource('category', 'Admin\CategoryController');
-});
-
+=======
+    Route::resource('cat', 'Admin\CategoryController');
 Route::resource('books', 'Admin\BookController');
+
+>>>>>>> b9cd8b78362bdfd22ec1053fcc462f9f4c8718d0
+});
+// Route::resource('cat', 'Admin\CategoryController');
+
+Route::get('/getBooks/{id}/', 'Admin\BookController@categoryBooks')->name('getBooks');
+Route::get('/', 'Admin\BookController@webBooks');
+

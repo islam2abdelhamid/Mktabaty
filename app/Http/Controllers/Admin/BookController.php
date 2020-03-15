@@ -11,6 +11,7 @@ use App\Book;
 use App\Category;
 use SebastianBergmann\Environment\Console;
 
+
 class BookController extends Controller
 {
     /**
@@ -144,5 +145,31 @@ class BookController extends Controller
             ->delete();
 
         return back()->with('message', 'Book deleted successfully');
+    }
+
+
+    public function categoryBooks($id)
+    {
+        $active = $id;
+        
+        $books = Book::orderBy('id', 'desc')->where('categorie_id', $id)->paginate(3);
+        
+        $bookCategories = Category::all();
+
+
+        return view('mktabaty.pages.books.Categoriesbooks', compact('books', 'bookCategories', 'active'));
+    }
+
+    public function webBooks()
+    {
+        $active = null;
+        $bookCategories = Category::all();
+        $category  = Category::orderBy('created_at', 'asc')->first();
+        if (isset($category)) {
+            $active = $category->id;
+        }
+        $books = Book::orderBy('id', 'desc')->where('categorie_id', $active)->paginate(3);
+
+        return view('mktabaty/pages/books/index', compact('bookCategories', 'books', 'active'));
     }
 }
