@@ -9,6 +9,7 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Illuminate\Validation\Rule;
 use App\Book;
 use App\Category;
+use Illuminate\Support\Facades\Auth;
 use SebastianBergmann\Environment\Console;
 
 
@@ -23,7 +24,6 @@ class BookController extends Controller
     {
         $books = Book::all();
         $categories = Category::all();
-
         return view('dashboard.pages.books.index', ['books' => $books, 'categories' => $categories]);
     }
 
@@ -152,7 +152,7 @@ class BookController extends Controller
     {
         $active = $id;
         
-        $books = Book::orderBy('id', 'desc')->where('categorie_id', $id)->paginate(3);
+        $books = Book::orderBy('id', 'desc')->where('category_id', $id)->paginate(3);
         
         $bookCategories = Category::all();
 
@@ -168,7 +168,7 @@ class BookController extends Controller
         if (isset($category)) {
             $active = $category->id;
         }
-        $books = Book::orderBy('id', 'desc')->where('categorie_id', $active)->paginate(3);
+        $books = Book::orderBy('id', 'desc')->where('category_id', $active)->paginate(3);
 
         return view('mktabaty/pages/books/index', compact('bookCategories', 'books', 'active'));
     }
