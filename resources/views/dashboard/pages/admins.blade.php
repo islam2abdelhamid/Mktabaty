@@ -34,34 +34,26 @@
                                     </th>
                                 </thead>
                                 <tbody>
+                                    @forelse ($users as $user)
                                     <tr>
                                         <td>
-                                            1
+                                            {{$user->id}}
                                         </td>
                                         <td>
-                                            Dakota Rice
+                                            {{$user->username}}
                                         </td>
                                         <td>
-                                            Rice@gmail.com
+                                            {{$user->email}}
                                         </td>
                                         <td>
-                                            <button class="btn btn-danger btn-sm">Delete</button>
+                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-white btn-link btn-sm">
+                                                <i class="material-icons">close</i>
+                                            </button>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>
-                                            2
-                                        </td>
-                                        <td>
-                                            Doris Greene
-                                        </td>
-                                        <td>
-                                            Malawi@yahoo.com
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-danger btn-sm">Delete</button>
-                                        </td>
-                                    </tr>
+                                    @empty
+                                        <p>No users</p>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>

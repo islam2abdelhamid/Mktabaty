@@ -12,7 +12,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table center">
+                        <table class="table text-center">
                             <thead class=" text-primary">
                                 <th>
                                     ID
@@ -31,60 +31,36 @@
                                 </th>
                             </thead>
                             <tbody>
+                                @forelse ($users as $user)
                                 <tr>
                                     <td>
-                                        1
+                                        {{$user->id}}
                                     </td>
                                     <td>
-                                        Dakota Rice
+                                        {{$user->username}}
                                     </td>
                                     <td>
-                                        Dakota@niger.com
+                                        {{$user->email}}
                                     </td>
                                     <td>
-                                        <input type="checkbox" checked data-toggle="toggle" data-onstyle="success"
-                                            data-size="sm">
+                                        <div class="form-check form-check-inline">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                                <span class="form-check-sign">
+                                                    <span class="check"></span>
+                                                </span>
+                                            </label>
+                                        </div>
                                     </td>
                                     <td>
-                                        <button class="btn btn-danger btn-sm">Remove</button>
+                                        <button type="button" rel="tooltip" title="Remove" class="btn btn-white btn-link btn-sm">
+                                            <i class="material-icons">close</i>
+                                        </button>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        2
-                                    </td>
-                                    <td>
-                                        Minerva Hooper
-                                    </td>
-                                    <td>
-                                        Minerva@niger.com
-                                    </td>
-                                    <td>
-                                        <input type="checkbox" checked data-toggle="toggle" data-onstyle="success"
-                                            data-size="sm">
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-danger btn-sm">Remove</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        3
-                                    </td>
-                                    <td>
-                                        Sage Rodriguez
-                                    </td>
-                                    <td>
-                                        Minerva@niger.com
-                                    </td>
-                                    <td>
-                                        <input type="checkbox" checked data-toggle="toggle" data-onstyle="success"
-                                            data-size="sm">
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-danger btn-sm">Remove</button>
-                                    </td>
-                                </tr>
+                                @empty
+                                    <p>No users</p>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
