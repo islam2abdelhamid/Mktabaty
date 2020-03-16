@@ -35,7 +35,7 @@
                                 </thead>
                                 <tbody>
                                     @forelse ($users as $user)
-                                    <tr>
+                                    <tr id={{$user->id}}>
                                         <td>
                                             {{$user->id}}
                                         </td>
@@ -46,7 +46,7 @@
                                             {{$user->email}}
                                         </td>
                                         <td>
-                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-white btn-link btn-sm">
+                                            <button type="button" rel="tooltip" title="Remove" onclick="deleteUser({{$user->id}})" class="btn btn-white btn-link btn-sm">
                                                 <i class="material-icons">close</i>
                                             </button>
                                         </td>
@@ -105,4 +105,13 @@
 
     </div>
 </div>
+<script>
+  function deleteUser(id) {
+        var row = document.getElementById(id);
+        row.parentNode.removeChild(row);
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", "deleteUser/" + id, true);
+        xmlhttp.send();
+  }
+</script>
 @endsection
