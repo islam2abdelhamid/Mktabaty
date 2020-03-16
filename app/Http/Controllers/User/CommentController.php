@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Book;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Egulias\EmailValidator\Warning\Comment;
+use Illuminate\Support\Facades\DB;
 
 class CommentController extends Controller
 {
@@ -36,26 +39,34 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
     
+//   $validator=$request->validate([
 
+//             'comment'=>'required|max:255|min:20',
+//             'rate'=>'required',
+//             'book_id'=>'unique:comments'
+//         ]);
+        $userid=Auth()->user()->id;
+        $comment=$request->comment;
+        // $book_id=$request->get('book_id');
+        $rate=$request->rate;
+        $ratedat=Carbon::now();
+        $book = Book::find($id);
+        $message="your comment is added successfully";
+try {
+    DB::table('comments')->insert(
+        ['comment' => $comment, 'rate' => $rate, 'user_id' => $userid,'rated_at'=>$ratedat, 'book_id'=>$book->id]
+    );} 
+    
+    catch (\Illuminate\Database\QueryException $ex) {
+        $message = 'You Already Commented this book';
+    }
+   
+        // print_r('ddsdsfds');
 
-        $validator = $request->validate([
-            'comment' => 'required|min:20|max:255',
-            'rating' => 'required',
-        ]);
-        // !this will be the actual userId
-        $userid = Auth()->user()->id;
-        $comment = $request->get('comment');
-        $bookid = $request->get('book_id');
-        $rating = $request->get('rate');
-        DB::table('comment')->insert(
-            ['comment' => $comment, 'rate' => $rating, 'user_id' => $userid, 'book_id' => $bookid]
-        );
-
-        return redirect('' . $bookid);
-
+        return redirect()->route('books.show' ,['id'=> $book->id])->with('message', $message);
 
     }
 

@@ -56,4 +56,5 @@ Route::resource('books', 'Admin\BookController')->middleware('can:view,App\User'
 Route::get('/getBooks/{id}/', 'Admin\BookController@categoryBooks')->name('getBooks')->middleware('can:view,App\User');
 Route::get('/', 'Admin\BookController@webBooks');
 Route::post('book/{id}', 'BookLeaseController@makeLease')->name('bookLease');
+Route::post('book/{id}', 'User\CommentController@store')->name('bookLease');
 
