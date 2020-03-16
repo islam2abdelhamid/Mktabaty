@@ -47,6 +47,7 @@ class BookController extends Controller
     {
         $request->validate([
             'title' => 'required',
+            'description' => 'required',
             'author' => 'required',
             'price' => 'required',
             'quantity' => 'required',
@@ -59,6 +60,7 @@ class BookController extends Controller
 
         $book = new Book;
         $book->title = $request->title;
+        $book->description = $request->description;
         $book->author = $request->author;
         $book->category_id = $request->category_id;
         $book->price = $request->price;
@@ -104,7 +106,6 @@ class BookController extends Controller
     public function update(Request $request, Book $book)
     {
 
-        print_r($book);
         $request->validate([
             'title' => 'required',
             'author' => 'required',
@@ -113,7 +114,6 @@ class BookController extends Controller
             'quantity' => 'required',
             'image' => 'image|mimes:jpeg,png,jpg,svg',
         ]);
-
 
         $book->title = $request->title;
         $book->author = $request->author;
@@ -148,16 +148,15 @@ class BookController extends Controller
     }
 
 
-    public function categoryBooks($id)
+    public function categoryBooks(Category $category)
     {
-        $active = $id;
-        
-        $books = Book::orderBy('id', 'desc')->where('category_id', $id)->paginate(3);
-        
+        $active = $category->id;
+
+        $books = Book::orderBy('id', 'desc')->where('category_id', $category->id)->paginate(3);
+
         $bookCategories = Category::all();
 
-
-        return view('mktabaty.pages.books.Categoriesbooks', compact('books', 'bookCategories', 'active'));
+        return view('mktabaty.pages.books.Categoriesbooks', compact('books', 'bookCategories', 'active', 'category'));
     }
 
     public function webBooks()

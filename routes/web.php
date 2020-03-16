@@ -71,7 +71,6 @@ Route::prefix('admin')->group(function () {
     Route::resource('books', 'Admin\BookController');
 
     Route::resource('category', 'Admin\CategoryController');
-    Route::resource('cat', 'Admin\CategoryController');
     Route::resource('books', 'Admin\BookController');
 });
 
@@ -79,5 +78,5 @@ Route::resource('books', 'Admin\BookController');
 
 // Route::resource('cat', 'Admin\CategoryController');
 
-Route::get('/getBooks/{id}/', 'Admin\BookController@categoryBooks')->name('getBooks');
+Route::get('/getBooks/{category}', 'Admin\BookController@categoryBooks')->name('getBooks');
 Route::get('/', 'Admin\BookController@webBooks');

@@ -11,7 +11,7 @@ class Category extends Model
     protected $fillable = ['name'];
     use SoftDeletes;
     protected $dates = ['deleted_at'];
-//Not tested yet
+    //Not tested yet
     public function books()
     {
         return $this->hasMany('App\Book');

@@ -34,6 +34,7 @@
                             <p class="card-category"> list of all our books</p>
                         </div>
                         <div class="card-body">
+
                             <div class="table-responsive">
                                 <table class="table text-center">
                                     <thead class=" text-primary">
@@ -72,7 +73,7 @@
                                                 {{$book->title}}
                                             </td>
                                             <td>
-                                                {{$book->auhtor}}
+                                                {{$book->author}}
                                             </td>
                                             <td>
                                                 {{$book->category()->get()[0]->name}}
@@ -81,12 +82,12 @@
                                                 {{$book->quantity}}
                                             </td>
                                             <td>
-                                                {{$book->avaliable}}
+                                                {{$book->available}}
                                             </td>
                                             <td>
                                                 {{$book->price}}
                                             </td>
-                                            <td>
+                                            <td class="d-flex">
                                                 <a href={{route('books.edit',$book->id)}}
                                                     class="btn btn-success btn-sm">Edit</a>
 
@@ -166,6 +167,14 @@
                                     <div class="form-group">
                                         <label class="bmd-label-floating">Title</label>
                                         <input type="text" class="form-control" name="title">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Description</label>
+                                        <textarea name="description" class="form-control" cols="30" rows="3"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -253,23 +262,11 @@
             </div>
 
             <div class="card-body modal-body">
-                {{-- @if (!isset($category->id))
-
-                        <form method="post" action="{{ route('cat.update',$category->id)}}">
-                @csrf
-                @method('PATCH')
-
-                <button type="submit" class="btn btn-primary pull-right">Edit</button>
-
-                @else --}}
 
                 <form method="post" action="{{ route('category.store') }}">
 
                     @csrf
-                    {{-- <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <input type="hidden" name="_method" value="PUT"> --}}
 
-                    {{-- @endif --}}
 
                     <div class="row">
                         <div class="col-md-10">
