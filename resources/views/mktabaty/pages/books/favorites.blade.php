@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="col-md-4 mt-4">
-  <div class="card">
+  <div class="card card-plain">
 
     <img class="card-img-top" src="assets/user/images/got.jpg" alt="book image" height="250px" />
 

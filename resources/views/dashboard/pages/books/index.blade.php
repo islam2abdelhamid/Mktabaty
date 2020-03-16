@@ -28,12 +28,13 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card">
+                    <div class="card card-plain">
                         <div class="card-header card-header-warning">
                             <h4 class="card-title ">Books</h4>
                             <p class="card-category"> list of all our books</p>
                         </div>
                         <div class="card-body">
+
                             <div class="table-responsive">
                                 <table class="table text-center">
                                     <thead class=" text-primary">
@@ -72,7 +73,7 @@
                                                 {{$book->title}}
                                             </td>
                                             <td>
-                                                {{$book->auhtor}}
+                                                {{$book->author}}
                                             </td>
                                             <td>
                                                 {{$book->category()->get()[0]->name}}
@@ -81,12 +82,12 @@
                                                 {{$book->quantity}}
                                             </td>
                                             <td>
-                                                {{$book->avaliable}}
+                                                {{$book->available}}
                                             </td>
                                             <td>
                                                 {{$book->price}}
                                             </td>
-                                            <td>
+                                            <td class="d-flex">
                                                 <a href={{route('books.edit',$book->id)}}
                                                     class="btn btn-success btn-sm">Edit</a>
 
@@ -111,7 +112,7 @@
                     <button class="btn btn-success btn-block" data-toggle="modal" data-target="#categoryModal">Add
                         Category</button>
                 </div>
-                <div class="card">
+                <div class="card card-plain">
                     <div class="card-header card-header-warning">
                         <h4 class="card-title ">Categories</h4>
                     </div>
@@ -170,6 +171,14 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Description</label>
+                                        <textarea name="description" class="form-control" cols="30" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-8">
                                     <div class="form-group">
                                         <label class="bmd-label-floating">Author</label>
@@ -185,7 +194,7 @@
                                             <select class="custom-select form-control" style="color: #fff;
                                             border: 1px solid #aaa;
                                             background: #20293f;
-                                            padding: 5px;" id="inputGroupSelect01" name="category_id">
+                                            padding: 5px;" id="inputGroupSelect01" name="category">
                                                 <option value="">Choose...</option>
                                                 @foreach ($categories as $category)
                                                 <option value="{{$category->id}}">{{$category->name}}</option>
@@ -253,23 +262,11 @@
             </div>
 
             <div class="card-body modal-body">
-                {{-- @if (!isset($category->id))
-
-                        <form method="post" action="{{ route('cat.update',$category->id)}}">
-                @csrf
-                @method('PATCH')
-
-                <button type="submit" class="btn btn-primary pull-right">Edit</button>
-
-                @else --}}
 
                 <form method="post" action="{{ route('category.store') }}">
 
                     @csrf
-                    {{-- <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <input type="hidden" name="_method" value="PUT"> --}}
 
-                    {{-- @endif --}}
 
                     <div class="row">
                         <div class="col-md-10">

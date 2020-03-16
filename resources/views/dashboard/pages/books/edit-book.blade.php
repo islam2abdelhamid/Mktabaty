@@ -38,6 +38,16 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            <label class="bmd-label-floating">Description</label>
+                            <textarea name="description" class="form-control" cols="30"
+                                rows="3">{{$book->description}}</textarea>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-8">
                         <div class="form-group">
@@ -53,7 +63,7 @@
                             <select class="custom-select form-control d-block" style="color: #fff;
                                 border: 1px solid #aaa;
                                 background: #20293f;
-                                padding: 5px;" id="inputGroupSelect01" name="category_id">
+                                padding: 5px;" id="inputGroupSelect01" name="category">
                                 <option value="">Choose...</option>
                                 @foreach ($categories as $category)
                                 <option {{$book->category_id===$category->id?"selected":""}} value="{{$category->id}}">

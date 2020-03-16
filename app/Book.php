@@ -24,5 +24,8 @@ class Book extends Model
         return $this->hasMany('App\Comment');
     }
 
+    public function leasedBy(){
+        return $this->BelongsToMany(User::class, 'book_lease');
+    }
     
 }

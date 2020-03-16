@@ -9,19 +9,19 @@
         </a></div>
     <div class="sidebar-wrapper">
         <ul class="nav">
-            <li class="nav-item  ">
+            <li class="{{ Request::is('admin/') ? 'nav-item active' : 'nav-item' }}">
                 <a class="nav-link" href="{{ route('dashboard') }}"> 
                     <i class="material-icons">dashboard</i>
                     <p>Dashboard</p>
                 </a>
             </li>
-            <li class="nav-item ">
+            <li class="{{ Request::is('admin/users') ? 'nav-item active' : 'nav-item' }}">
                 <a class="nav-link" href="{{ route('listUsers') }}">
                     <i class="material-icons">person</i>
                     <p>Users</p>
                 </a>
             </li>
-            <li class="nav-item active ">
+            <li class="{{ Request::is('admin/admins') ? 'nav-item active' : 'nav-item' }}">
                 <a class="nav-link" href="{{ route('listAdmins') }}">
                     <i class="material-icons">person</i>
                     <p>Admins</p>
