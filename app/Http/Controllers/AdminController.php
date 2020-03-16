@@ -40,7 +40,7 @@ class AdminController extends Controller
 
         $users=DB::table('users')
                 ->select('id','username', 'email','isActive')
-                ->where('isAdmin',0)
+                ->where('isAdmin',0)->where('deleted_at',null)
                 ->get();
         return view('dashboard.pages.users', ['users'=>$users]);
     }
@@ -51,11 +51,18 @@ class AdminController extends Controller
 
         $users=DB::table('users')
                 ->select('id','username', 'email','isActive')
-                ->where('isAdmin',1)
+                ->where('isAdmin',1)->where('deleted_at',null)
                 ->get();
         return view('dashboard.pages.admins', ['users'=>$users]);
     }
 
+    public function ChangeActiveState($id)
+    {
+        $this->authorize('view', User::class);
+        $user = User::find($id);
+        $user->isActive = !$user->isActive ;
+        $user->save();  
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -120,6 +127,6 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::find($id)->delete();
     }
 }

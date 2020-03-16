@@ -32,7 +32,7 @@
                             </thead>
                             <tbody>
                                 @forelse ($users as $user)
-                                <tr>
+                                <tr id={{$user->id}}>
                                     <td>
                                         {{$user->id}}
                                     </td>
@@ -45,7 +45,7 @@
                                     <td>
                                         <div class="form-check form-check-inline">
                                             <label class="form-check-label">
-                                                <input class="form-check-input"  {{$user->isActive?'checked':''}}  type="checkbox" id="inlineCheckbox1" value="option1">
+                                                <input class="form-check-input"  {{$user->isActive?'checked':''}}  type="checkbox" id="inlineCheckbox1" onclick="changeState({{$user->id}})" value="option1">
                                                 <span class="form-check-sign">
                                                     <span class="check"></span>
                                                 </span>
@@ -53,7 +53,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <button type="button" rel="tooltip" title="Remove" class="btn btn-white btn-link btn-sm">
+                                        <button type="button" rel="tooltip" title="Remove" onclick="deleteUser({{$user->id}})" class="btn btn-white btn-link btn-sm">
                                             <i class="material-icons">close</i>
                                         </button>
                                     </td>
@@ -70,3 +70,20 @@
     </div>
 </div>
 @endsection
+<script>
+    function changeState(id) {
+        //alert(id);
+        //var row = document.getElementById(id);
+        //row.parentNode.removeChild(row);
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", "change/" + id, true);
+        xmlhttp.send();
+  }
+  function deleteUser(id) {
+        var row = document.getElementById(id);
+        row.parentNode.removeChild(row);
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", "deleteUser/" + id, true);
+        xmlhttp.send();
+  }
+</script>
