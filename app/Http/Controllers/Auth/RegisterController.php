@@ -68,6 +68,7 @@ class RegisterController extends Controller
         $newName = 'public/usersImgs/user.jpg';
         if ($_FILES['image']['name'] != "") {
             $newName = Storage::put('/public/usersImgs', $data['image']);
+        }
             return User::create([
                 'name' => $data['name'],
                 'email' => $data['email'],
@@ -75,6 +76,5 @@ class RegisterController extends Controller
                 'password' => Hash::make($data['password']),
                 'image' => $newName
             ]);
-        }
     }
 }
