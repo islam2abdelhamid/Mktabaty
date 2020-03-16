@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\BookLeaseController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -80,9 +82,22 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $data)
     {
-        //
+        //dd($data);
+        $newName = 'public/usersImgs/user.jpg';
+        if ($_FILES['image']['name'] != "") {
+            $newName = Storage::put('/public/usersImgs', $data['image']);
+        }
+        $user =User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'username' => $data['username'],
+            'password' => Hash::make($data['password']),
+            'image' => $newName,
+            'isAdmin' => 1
+        ]);
+        return redirect('admin');
     }
 
     /**
