@@ -63,7 +63,7 @@
                             <select class="custom-select form-control d-block" style="color: #fff;
                                 border: 1px solid #aaa;
                                 background: #20293f;
-                                padding: 5px;" id="inputGroupSelect01" name="category_id">
+                                padding: 5px;" id="inputGroupSelect01" name="category">
                                 <option value="">Choose...</option>
                                 @foreach ($categories as $category)
                                 <option {{$book->category_id===$category->id?"selected":""}} value="{{$category->id}}">

@@ -5,7 +5,7 @@
     <div class="container-fluid">
 
         <div class="col-md-12">
-            <div class="card">
+            <div class="card card-plain">
                 <div class="card-header card-header-warning">
                     <h4 class="card-title ">Users</h4>
                     <p class="card-category"> list of all our users</p>
@@ -45,7 +45,9 @@
                                     <td>
                                         <div class="form-check form-check-inline">
                                             <label class="form-check-label">
-                                                <input class="form-check-input"  {{$user->isActive?'checked':''}}  type="checkbox" id="inlineCheckbox1" onclick="changeState({{$user->id}})" value="option1">
+                                                <input class="form-check-input" {{$user->isActive?'checked':''}}
+                                                    type="checkbox" id="inlineCheckbox1"
+                                                    onclick="changeState({{$user->id}})" value="option1">
                                                 <span class="form-check-sign">
                                                     <span class="check"></span>
                                                 </span>
@@ -53,13 +55,14 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <button type="button" rel="tooltip" title="Remove" onclick="deleteUser({{$user->id}})" class="btn btn-white btn-link btn-sm">
+                                        <button type="button" rel="tooltip" title="Remove"
+                                            onclick="deleteUser({{$user->id}})" class="btn btn-white btn-link btn-sm">
                                             <i class="material-icons">close</i>
                                         </button>
                                     </td>
                                 </tr>
                                 @empty
-                                    <p>No users</p>
+                                <p>No users</p>
                                 @endforelse
                             </tbody>
                         </table>

@@ -1,5 +1,5 @@
 <div class="col-md-4 mt-4">
-    <div class="card">
+    <div class="card card-plain">
         <img class="card-img-top" src={{asset("images/".$book->image)}} alt="book image" height="250px" />
 
         <div class="card-body">

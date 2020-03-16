@@ -8,7 +8,7 @@
     <!-- Books -->
     <div class="row">
         <div class="col-3 mt-3">
-            <div class="card">
+            <div class="card card-plain">
                 <img class="card-img-top" src="assets/user/images/got.jpg" alt="book image" height="300px">
             </div>
         </div>
@@ -137,7 +137,7 @@
     </div>
 
     <div class="col-md-2 mt-4">
-        <div class="card">
+        <div class="card card-plain">
             <img class="card-img-top" src="assets/user/images/got.jpg" alt="book image" height="250px">
 
             <div class="card-body">
@@ -153,7 +153,7 @@
     </div>
 
     <div class="col-md-2 mt-4">
-        <div class="card">
+        <div class="card card-plain">
             <img class="card-img-top" src="assets/user/images/got.jpg" alt="book image" height="250px">
 
             <div class="card-body">
@@ -169,7 +169,7 @@
     </div>
 
     <div class="col-md-2 mt-4">
-        <div class="card">
+        <div class="card card-plain">
             <img class="card-img-top" src="assets/user/images/got.jpg" alt="book image" height="250px">
 
             <div class="card-body">
@@ -185,7 +185,7 @@
     </div>
 
     <div class="col-md-2 mt-4">
-        <div class="card">
+        <div class="card card-plain">
             <img class="card-img-top" src="assets/user/images/got.jpg" alt="book image" height="250px">
 
             <div class="card-body">
@@ -201,7 +201,7 @@
     </div>
 
     <div class="col-md-2 mt-4">
-        <div class="card">
+        <div class="card card-plain">
             <img class="card-img-top" src="assets/user/images/got.jpg" alt="book image" height="250px">
 
             <div class="card-body">

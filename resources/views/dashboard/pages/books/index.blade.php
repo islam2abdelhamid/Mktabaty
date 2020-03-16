@@ -28,7 +28,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card">
+                    <div class="card card-plain">
                         <div class="card-header card-header-warning">
                             <h4 class="card-title ">Books</h4>
                             <p class="card-category"> list of all our books</p>
@@ -112,7 +112,7 @@
                     <button class="btn btn-success btn-block" data-toggle="modal" data-target="#categoryModal">Add
                         Category</button>
                 </div>
-                <div class="card">
+                <div class="card card-plain">
                     <div class="card-header card-header-warning">
                         <h4 class="card-title ">Categories</h4>
                     </div>
@@ -194,7 +194,7 @@
                                             <select class="custom-select form-control" style="color: #fff;
                                             border: 1px solid #aaa;
                                             background: #20293f;
-                                            padding: 5px;" id="inputGroupSelect01" name="category_id">
+                                            padding: 5px;" id="inputGroupSelect01" name="category">
                                                 <option value="">Choose...</option>
                                                 @foreach ($categories as $category)
                                                 <option value="{{$category->id}}">{{$category->name}}</option>

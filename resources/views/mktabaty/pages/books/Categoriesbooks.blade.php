@@ -4,10 +4,8 @@
 @endsection
 
 @section('content')
-<div class="col-md-4 mt-4">
-  @foreach ($books as $book)
-  @include('mktabaty.includes.book')
-  @endforeach
-</div>
+@foreach ($books as $book)
+@include('mktabaty.includes.book')
+@endforeach
 
 @stop

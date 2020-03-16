@@ -52,7 +52,6 @@ Route::prefix('admin')->group(function () {
 
 Route::resource('books', 'Admin\BookController')->middleware('can:view,App\User');
 
-//Route::resource('cat', 'Admin\CategoryController');
 
 Route::get('/getBooks/{id}/', 'Admin\BookController@categoryBooks')->name('getBooks')->middleware('can:view,App\User');
 Route::get('/', 'Admin\BookController@webBooks');

@@ -51,6 +51,7 @@ class BookController extends Controller
             'author' => 'required',
             'price' => 'required',
             'quantity' => 'required',
+            'category' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,svg',
         ]);
 
@@ -62,7 +63,7 @@ class BookController extends Controller
         $book->title = $request->title;
         $book->description = $request->description;
         $book->author = $request->author;
-        $book->category_id = $request->category_id;
+        $book->category_id = $request->category;
         $book->price = $request->price;
         $book->quantity = $request->quantity;
         $book->available = $request->quantity;
@@ -109,7 +110,7 @@ class BookController extends Controller
         $request->validate([
             'title' => 'required',
             'author' => 'required',
-            'category_id' => 'required',
+            'category' => 'required',
             'price' => 'required',
             'quantity' => 'required',
             'image' => 'image|mimes:jpeg,png,jpg,svg',
@@ -117,7 +118,7 @@ class BookController extends Controller
 
         $book->title = $request->title;
         $book->author = $request->author;
-        $book->category_id = $request->category_id;
+        $book->category_id = $request->category;
         $book->price = $request->price;
         $book->quantity = $request->quantity;
         $book->available = $request->quantity;
@@ -148,15 +149,15 @@ class BookController extends Controller
     }
 
 
-    public function categoryBooks(Category $category)
+    public function categoryBooks($category_id)
     {
-        $active = $category->id;
 
-        $books = Book::orderBy('id', 'desc')->where('category_id', $category->id)->paginate(3);
 
+        $category =  Category::find($category_id);
+        $books = $category->books()->get();
         $bookCategories = Category::all();
 
-        return view('mktabaty.pages.books.Categoriesbooks', compact('books', 'bookCategories', 'active', 'category'));
+        return view('mktabaty.pages.books.Categoriesbooks', compact('books', 'bookCategories', 'category'));
     }
 
     public function webBooks()
