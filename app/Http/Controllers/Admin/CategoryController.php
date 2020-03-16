@@ -92,8 +92,7 @@ class CategoryController extends Controller
 
 
         Category::whereId($id)->update($validatedData);
-
-        return back()->with('message', 'Book updated successfully');
+        return redirect()->route('books.index')->with('message', 'Category updated successfully');
     }
 
     /**
