@@ -24,7 +24,7 @@ Route::get('admin/admins', 'AdminController@listAdmins')->name('listAdmins')->mi
 Route::get('admin/dashboard', 'AdminController@index')->name('dashboard')->middleware('can:view,App\User');
 Route::get('admin/change/{id}', 'AdminController@ChangeActiveState')->name('ChangeActiveState')->middleware('can:view,App\User');
 Route::get('admin/deleteUser/{id}', 'AdminController@destroy')->name('destroy')->middleware('can:view,App\User');
-
+Route::post('admin/addAdmin', 'AdminController@store')->name('addAdmin')->middleware('can:view,App\User');
 //Route::get('/', 'Admin\BookController@index')->middleware('can:view,App\User'); repeated and un used route
 
 
