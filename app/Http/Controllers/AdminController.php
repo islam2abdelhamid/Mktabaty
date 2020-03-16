@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\BookLeaseController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -15,7 +19,19 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+        $data = BookLeaseController::getDataForChart();
+        if(gettype($data) === 'array'){
+            $weeks = BookLeaseController::getWeeks($data);
+            $profitsPerWeek = BookLeaseController::getProfitsPerWeek($data);
+            $data['weeks'] = $weeks; 
+            $data['profits'] = $profitsPerWeek;  
+    
+            $jdata = json_encode($data);
+        }
+        else{
+            $jdata = $data;
+        }
+        return view('dashboard.pages.index',["jsonData"=>$jdata]);
     }
 
     /**
@@ -25,25 +41,34 @@ class AdminController extends Controller
      */
     public function listUsers()
     {
+        //$this->authorize('view', User::class);
         $users = new User;
 
         $users=DB::table('users')
                 ->select('id','username', 'email','isActive')
-                ->where('isAdmin',0)
+                ->where('isAdmin',0)->where('deleted_at',null)
                 ->get();
         return view('dashboard.pages.users', ['users'=>$users]);
     }
     public function listAdmins()
     {
+        //$this->authorize('view', User::class);
         $users = new User;
 
         $users=DB::table('users')
                 ->select('id','username', 'email','isActive')
-                ->where('isAdmin',1)
+                ->where('isAdmin',1)->where('deleted_at',null)
                 ->get();
         return view('dashboard.pages.admins', ['users'=>$users]);
     }
 
+    public function ChangeActiveState($id)
+    {
+        $this->authorize('view', User::class);
+        $user = User::find($id);
+        $user->isActive = !$user->isActive ;
+        $user->save();  
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -61,9 +86,22 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $data)
     {
-        //
+        //dd($data);
+        $newName = 'public/usersImgs/user.jpg';
+        if ($_FILES['image']['name'] != "") {
+            $newName = Storage::put('/public/usersImgs', $data['image']);
+        }
+        $user =User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'username' => $data['username'],
+            'password' => Hash::make($data['password']),
+            'image' => $newName,
+            'isAdmin' => 1
+        ]);
+        return redirect('admin');
     }
 
     /**
@@ -108,6 +146,6 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::find($id)->delete();
     }
 }

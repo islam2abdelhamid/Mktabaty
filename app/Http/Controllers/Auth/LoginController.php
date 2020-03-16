@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -34,6 +36,13 @@ class LoginController extends Controller
         } else {
             return redirect()->intended('/');
         }
+    }
+    public function username()
+    {
+        $userState = User::where('username', $_POST['username'])->value('isActive');
+        if (!$userState)
+            return false;
+        return 'username';
     }
     /**
      * Create a new controller instance.

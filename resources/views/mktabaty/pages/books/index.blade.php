@@ -38,3 +38,6 @@
 @endforeach
 
 @stop
+@include('mktabaty.includes.book')
+@endforeach
+@stop

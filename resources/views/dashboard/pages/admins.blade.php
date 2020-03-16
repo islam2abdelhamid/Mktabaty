@@ -35,7 +35,7 @@
                                 </thead>
                                 <tbody>
                                     @forelse ($users as $user)
-                                    <tr>
+                                    <tr id={{$user->id}}>
                                         <td>
                                             {{$user->id}}
                                         </td>
@@ -46,12 +46,14 @@
                                             {{$user->email}}
                                         </td>
                                         <td>
-                                            <button class="btn btn-danger btn-sm">Remove</button>
+                                            <button type="button" rel="tooltip" title="Remove" onclick="deleteUser({{$user->id}})" class="btn btn-white btn-link btn-sm">
+                                                <i class="material-icons">close</i>
+                                            </button>
                                         </td>
                                     </tr>
-                                @empty
-                                    <p>No users</p>
-                                @endforelse
+                                    @empty
+                                        <p>No users</p>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
@@ -68,28 +70,96 @@
                         <h4 class="card-title">Admin Selection</h4>
                     </div>
                     <div class="card-body modal-body">
-                        <form>
                             <div class="row">
                                 <div class="col-md-10">
                                     <div class="form-group">
-                                        <div class="input-group mt-4">
-                                            <label class="bmd-label-floating" for="inputGroupSelect01">Select User To be
-                                                Admin</label>
-                                            <select class="custom-select form-control" id="inputGroupSelect01">
-                                                <option selected>User1</option>
-                                                <option value="1">User2</option>
-                                                <option value="2">User3</option>
-                                                <option value="3">User3</option>
-                                            </select>
-                                        </div>
+                                            <form method="POST" action="{{ route('addAdmin') }}" enctype="multipart/form-data">
+                                                @csrf
+                                                <div class="form-group row">
+                                                    <label for="name" class="bmd-label-floating">{{ __('Name') }}</label>
+                        
+                                                    <div class="col-md-12">
+                                                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                        
+                                                        @error('name')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                        
+                                                <div class="form-group row">
+                                                    <label for="username" class="bmd-label-floating">{{ __('Username') }}</label>
+                        
+                                                    <div class="col-md-12">
+                                                        <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username">
+                        
+                                                        @error('username')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                        
+                                                <div class="form-group row">
+                                                    <label for="email" class="bmd-label-floating">{{ __('E-Mail Address') }}</label>
+                        
+                                                    <div class="col-md-12">
+                                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                        
+                                                        @error('email')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                        
+                                                <div class="form-group row">
+                                                    <label for="password" class="bmd-label-floating">{{ __('Password') }}</label>
+                        
+                                                    <div class="col-md-12">
+                                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                        
+                                                        @error('password')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                        
+                                                <div class="form-group row">
+                                                    <label for="password-confirm" class="bmd-label-floating">{{ __('Confirm Password') }}</label>
+                        
+                                                    <div class="col-md-12">
+                                                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                                    </div>
+                                                </div>
+                        
+                                                <div class="form-group row">
+                                                    <label for="image" class="bmd-label-floating">{{ __('image') }}</label>
+                        
+                                                    <div class="col-md-12">
+                                                        <input id="image" type="file" class="file-upload" name="image">
+                                                    </div>
+                                                </div>
+                        
+                                                <div class="form-group row mb-0">
+                                                    <div class="col-md-12 offset-md-4">
+                                                        <button type="submit" class="btn btn-primary">
+                                                            {{ __('Add') }}
+                                                        </button>
+                                                    </div>
+                                               
+                                            </form>
+                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row justify-content-center">
-                                <button type="submit" class="btn btn-primary pull-right">Add</button>
-                            </div>
                             <div class="clearfix"></div>
-                        </form>
                     </div>
                 </div>
 
@@ -100,4 +170,13 @@
 
     </div>
 </div>
+<script>
+  function deleteUser(id) {
+        var row = document.getElementById(id);
+        row.parentNode.removeChild(row);
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", "deleteUser/" + id, true);
+        xmlhttp.send();
+  }
+</script>
 @endsection

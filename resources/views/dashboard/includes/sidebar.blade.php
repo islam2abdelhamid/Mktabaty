@@ -9,26 +9,26 @@
         </a></div>
     <div class="sidebar-wrapper">
         <ul class="nav">
-            <li class="nav-item  ">
-                <a class="nav-link" href="./dashboard.html">
+            <li class="{{ Request::is('admin/') ? 'nav-item active' : 'nav-item' }}">
+                <a class="nav-link" href="{{ route('dashboard') }}"> 
                     <i class="material-icons">dashboard</i>
                     <p>Dashboard</p>
                 </a>
             </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="./users.html">
+            <li class="{{ Request::is('admin/users') ? 'nav-item active' : 'nav-item' }}">
+                <a class="nav-link" href="{{ route('listUsers') }}">
                     <i class="material-icons">person</i>
                     <p>Users</p>
                 </a>
             </li>
-            <li class="nav-item active ">
-                <a class="nav-link" href="./admins.html">
+            <li class="{{ Request::is('admin/admins') ? 'nav-item active' : 'nav-item' }}">
+                <a class="nav-link" href="{{ route('listAdmins') }}">
                     <i class="material-icons">person</i>
                     <p>Admins</p>
                 </a>
             </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="./books.html">
+            <li class="{{ Request::is('admin/books') ? 'nav-item active' : 'nav-item' }}">
+                <a class="nav-link" href={{ url('/admin/books') }}>
                     <i class="material-icons">content_paste</i>
                     <p>Books</p>
                 </a>

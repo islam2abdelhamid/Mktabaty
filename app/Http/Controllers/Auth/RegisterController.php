@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class RegisterController extends Controller
@@ -66,16 +65,16 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $newName='public/usersImgs/user.jpg';
+        $newName = 'public/usersImgs/user.jpg';
         if ($_FILES['image']['name'] != "") {
-            $newName=Storage::put('/public/usersImgs', $data['image']);
+            $newName = Storage::put('/public/usersImgs', $data['image']);
         }
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'username' => $data['username'],
-            'password' => Hash::make($data['password']),
-            'image' => $newName
-        ]);;
+            return User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'username' => $data['username'],
+                'password' => Hash::make($data['password']),
+                'image' => $newName
+            ]);
     }
 }
