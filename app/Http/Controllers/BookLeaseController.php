@@ -73,7 +73,7 @@ class BookLeaseController extends Controller
                 ->decrement('available');
 
             DB::table('book_lease')->insert(
-                ['book_id' => $id, 'user_id' => Auth::user()->id, 'days' => $request->lease_days]
+                ['created_at' => Carbon::now(), 'return_at' => Carbon::now()->addDays($request->lease_days), 'updated_at' => Carbon::now(), 'book_id' => $id, 'user_id' => Auth::user()->id, 'days' => $request->lease_days]
             );
             DB::commit();
             $message = 'Enjoy Reading';

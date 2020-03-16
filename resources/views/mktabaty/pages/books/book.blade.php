@@ -59,8 +59,15 @@
                 @endif
 
                 <div>
+                    @if (auth::user()->leasedBooks()->get()->contains('id',$book->id))
+                    <div class="alert alert-success">
+                        You already leased this book, Happy Reading :)
+                    </div>
+                    @else
                     <button class="btn btn-success" data-toggle="modal" data-target="#leaseModal"
                         data-whatever="@mdo">Lease</button>
+                    @endif
+
                 </div>
             </div>
 
@@ -264,7 +271,12 @@
                 </button>
             </div>
             <div class="modal-body">
-                
+
+                @if (auth::user()->leasedBooks()->get()->contains('id',$book->id))
+                <div class="alert alert-success">
+                    You already leased this book, Happy Reading :)
+                </div>
+                @else
                 <form action="{{ route('bookLease', $book->id)}}" method="post" class="d-inline">
                     @csrf
                     @method('POST')
@@ -277,6 +289,7 @@
                         <button type="submit" class="btn btn-success">Confirm Lease</button>
                     </div>
                 </form>
+                @endif
             </div>
 
         </div>
