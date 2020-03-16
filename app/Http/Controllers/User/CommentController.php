@@ -41,13 +41,14 @@ class CommentController extends Controller
      */
     public function store(Request $request,$id)
     {
+        echo "hhhhhhhhhhhhhhhhhh";
     
-//   $validator=$request->validate([
+  $validator=$request->validate([
 
-//             'comment'=>'required|max:255|min:20',
-//             'rate'=>'required',
-//             'book_id'=>'unique:comments'
-//         ]);
+            'comment'=>'required|max:255|min:20',
+            'rate'=>'required',
+            'book_id'=>'unique:comments'
+        ]);
         $userid=Auth()->user()->id;
         $comment=$request->comment;
         // $book_id=$request->get('book_id');
@@ -66,8 +67,8 @@ try {
    
         // print_r('ddsdsfds');
 
-        return redirect()->route('books.show' ,['id'=> $book->id])->with('message', $message);
-
+        // return redirect()->route('books.show' ,['id'=> $book->id])->with('message', $message);
+        return redirect('/books/'. $book->id)->with('message',$message);
     }
 
     /**

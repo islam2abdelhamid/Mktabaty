@@ -75,7 +75,7 @@
     </div>
     <!-- End of Books -->
 
-    <form class="d-flex justify-content-between " action="{{ route('bookLease', $book->id)}}" method="POST">
+    <form class="d-flex justify-content-between " action="{{ route('comment', $book->id)}}" method="POST">
         <div class="form-group flex-grow-1">
             @csrf
             @method('POST')
