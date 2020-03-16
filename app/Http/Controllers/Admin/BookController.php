@@ -19,12 +19,15 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = new Book;
-        $books=DB::table('books')
-                ->select('id','title', 'auther','price','quantity','avaliable')
-                ->get();
+        // $books = new Book;
+        // $books=DB::table('books')
+        //         ->select('id','title', 'auther','price','quantity','avaliable')
+        //         ->get();
 
-        return view('showBooks', ['books'=>$books]);
+        // return view('showBooks', ['books'=>$books]);
+        $books = Book::all();
+        return view('mktabaty.pages.books.index')->with('books', $books);
+
     }
 
     /**

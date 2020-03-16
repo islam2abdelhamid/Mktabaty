@@ -26,9 +26,12 @@ Route::get('admin/users', 'AdminController@listUsers')->name('listUsers')->middl
 Route::get('admin/admins', 'AdminController@listAdmins')->name('listAdmins')->middleware(['auth']);
 
 
-Route::get('/', function () {
-    return view('mktabaty.pages.books.index');
-});
+//Route::get('/', function () {
+    //return view('mktabaty.pages.books.index');
+//});
+
+Route::get('/', 'Admin\BookController@index');
+
 
 Route::get('/favorites', function () {
     return view('mktabaty.pages.books.favorites');
