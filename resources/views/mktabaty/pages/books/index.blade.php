@@ -3,13 +3,13 @@
 <div class="col-md-4 mt-4">
   @foreach ($books as $book)
   <div class="card">
-    {{$book}}
+    {{-- {{$book}} --}}
     <img class="card-img-top" src={{asset("images/".$book->image)}} alt="book image" height="250px" />
 
     <div class="card-body">
       <div class="d-flex justify-content-between">
         <h4 class="card-title">
-          <a href="/book" class="no-decoration">{{$book->title}}</a>
+          <a href="{{route('books.show' ,['id'=> $book->id])}}" class="no-decoration">{{$book->title}}</a>
         </h4>
         <span class="text-secondary d-flex ">{{$book->author}}</span>
 

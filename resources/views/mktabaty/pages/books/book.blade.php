@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-3 mt-3">
             <div class="card">
-                <img class="card-img-top" src="assets/user/images/got.jpg" alt="book image" height="300px">
+                <img class="card-img-top" src={{asset("images/".$book->image)}} alt="book image" height="300px">
             </div>
         </div>
 
@@ -17,7 +17,8 @@
 
             <div class="card-body">
                 <div>
-                    <h4 class="card-title"><a href="#" class="no-decoration">Book Title</a></h4>
+                    <h4 class="card-title">{{$book->title}}</h4>
+                    <h6 class="card-title">{{$book->author}}</h6>
                 </div>
 
                 <div class="star-rating">
@@ -36,12 +37,31 @@
                 </p>
 
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="text-secondary d-flex ">4 copies available</span>
+                    <span class="text-secondary d-flex ">{{$book->available}} copies available</span>
                 </div>
+                <br/>
+
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @elseif (session()->get('message'))
+                    @if(session()->get('message') === 'Enjoy Reading')
+                    <div class="alert alert-success">
+                        {{ session()->get('message') }}
+                    </div>
+                    @else
+                    <div class="alert alert-danger">
+                        {{ session()->get('message') }}
+                    </div>
+                    @endif
+                @endif
 
                 <div>
-
-
                     <button class="btn btn-success" data-toggle="modal" data-target="#leaseModal"
                         data-whatever="@mdo">Lease</button>
                 </div>
@@ -235,7 +255,7 @@
 </div>
 
 
-
+{{-- Begining of   Lease Modal --}}
 <div class="modal fade mt-5" id="leaseModal" tabindex="-1" role="dialog" aria-labelledby="leaseModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -247,14 +267,17 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form  action="{{ route('bookLease', $book->id)}}" method="post"
+                    class="d-inline">
+                    @csrf
+                    @method('POST')
                     <div class="form-group">
                         <label for="lease-days" class="col-form-label">NO. of Days :</label>
-                        <input type="number" class="form-control" id="lease-days">
+                        <input type="number" class="form-control" id="lease-days" name="lease_days">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success">Confirm Lease</button>
+                        <button type="submit" class="btn btn-success">Confirm Lease</button>
                     </div>
                 </form>
             </div>
@@ -262,5 +285,5 @@
         </div>
     </div>
 </div>
-
+{{-- End of lease Modal --}}
 @stop

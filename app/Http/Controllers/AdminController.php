@@ -20,13 +20,17 @@ class AdminController extends Controller
     public function index()
     {
         $data = BookLeaseController::getDataForChart();
-        $weeks = BookLeaseController::getWeeks($data);
-        $profitsPerWeek = BookLeaseController::getProfitsPerWeek($data);
-        $data['weeks'] = $weeks; 
-        $data['profits'] = $profitsPerWeek;  
-
-        $jdata = json_encode($data);
-        // return $profitsPerWeek;
+        if(gettype($data) === 'array'){
+            $weeks = BookLeaseController::getWeeks($data);
+            $profitsPerWeek = BookLeaseController::getProfitsPerWeek($data);
+            $data['weeks'] = $weeks; 
+            $data['profits'] = $profitsPerWeek;  
+    
+            $jdata = json_encode($data);
+        }
+        else{
+            $jdata = $data;
+        }
         return view('dashboard.pages.index',["jsonData"=>$jdata]);
     }
 
