@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Book;
+use App\Category;
 use App\Favorites;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class FavouriteController extends Controller
 {
@@ -18,6 +21,13 @@ class FavouriteController extends Controller
     public function index()
     {
         //
+
+        $favourites = Favorites::where('user_id', Auth::id())->pluck('book_id')->toArray();
+        $books = Book::all();
+
+        return view("mktabaty/pages/books/favorites", compact('favourites', 'books'));        // "RatedBooks" => DB::table('comments')
+
+
     }
 
     /**
@@ -36,19 +46,17 @@ class FavouriteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$id)
+    public function store(Request $request, $id)
     {
         //
         $book = Book::find($id);
 
-        $favourite=new Favorites();
-        $favourite->book_id=$request->book_id;
-        $favourite->user_id=Auth::id();
-        $message='Add book to your Favourites';
+        $favourite = new Favorites();
+        $favourite->book_id = $request->book_id;
+        $favourite->user_id = Auth::id();
+        $message = 'Add book to your Favourites';
         $favourite->save();
-        return redirect('/books/'. $book->id)->with('message',$message);
-
-
+        return redirect('/books/' . $book->id)->with('message', $message);
     }
 
     /**

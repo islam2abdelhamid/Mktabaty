@@ -42,4 +42,8 @@ class User extends Authenticatable
     public function leasedBooks(){
         return $this->BelongsToMany(Book::class,'book_lease');
     }
+
+    public function favoriteBooks(){
+        return $this->belongsToMany('App\Book', 'book_favorites');
+    }
 }

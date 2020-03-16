@@ -4,6 +4,8 @@
 @endsection
 
 @section('content')
+@foreach ( $books as $book )
+@if(in_array($book->id,$favourites))
 <div class="col-md-4 mt-4">
   <div class="card card-plain">
 
@@ -38,6 +40,13 @@
     </div>
 
   </div>
+
+  @endif
+            
+       
+    
+
+  @endforeach
 </div>
 
 @stop

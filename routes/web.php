@@ -63,6 +63,7 @@ Route::get('/getBooks/{id}/', 'Admin\BookController@categoryBooks')->name('getBo
 Route::get('/', 'Admin\BookController@webBooks');
 Route::post('comment/{id}', 'User\CommentController@store')->name('comment');
 Route::post('fav/{id}', 'FavouriteController@store')->name('fav');
+Route::get('/favorites', 'FavouriteController@index');
 
 Route::post('book/{id}', 'BookLeaseController@makeLease')->name('bookLease');
 
