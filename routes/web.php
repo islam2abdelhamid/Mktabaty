@@ -81,3 +81,5 @@ Route::resource('books', 'Admin\BookController');
 
 Route::get('/getBooks/{id}/', 'Admin\BookController@categoryBooks')->name('getBooks');
 Route::get('/', 'Admin\BookController@webBooks');
+Route::post('book/{id}', 'BookLeaseController@makeLease')->name('bookLease');
+
