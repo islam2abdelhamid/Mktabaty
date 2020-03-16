@@ -82,6 +82,8 @@ class BookController extends Controller
     public function show($id)
     {
         //
+        $book = Book::find($id);
+        return view('mktabaty.pages.books.book', ['book' => $book]);
     }
 
     /**

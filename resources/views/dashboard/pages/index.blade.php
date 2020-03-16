@@ -8,7 +8,12 @@
                 <div class="card card-chart">
                     <div class="card-header card-header-success">
                         {{-- <div class="ct-chart"> --}}
-                            <canvas id="myChart"></canvas>
+                            
+                            @if(gettype(json_decode($jsonData)) === "object")
+                                <canvas id="myChart"></canvas>
+                            @else
+                             <h2>{{$jsonData}}</h2>
+                            @endif
                         {{-- </div> --}}
                     </div>
                     <div class="card-body">
@@ -34,27 +39,15 @@
     let myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: [cData.weeks],
+            labels: cData.weeks,
             datasets: [{
                 label: 'Profits Per Week',
-                data: [cData.profits],  
-                backgroundColor: [
-                    // 'rgba(153, 102, 255, 0.2)'
-                    // 'rgba(255, 99, 132, 0.2)',
-                    // 'rgba(54, 162, 235, 0.2)',
-                    // 'rgba(255, 206, 86, 0.2)',
-                    // 'rgba(75, 192, 192, 0.2)',
-                    // 'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    // 'rgba(255, 99, 132, 1)'
-                    // 'rgba(54, 162, 235, 1)',
-                    // 'rgba(255, 206, 86, 1)',
-                    // 'rgba(75, 192, 192, 1)',
-                    // 'rgba(153, 102, 255, 1)',
-                    // 'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
+                data: cData.profits,
+                borderWidth: 1,
+                hoverBorderColor: '#0000ff',
+                hoverBackgroundColor:'#000ff00',
+                barThickness: 20,
+                maxBarThickness: 30,
             }]
         },
         options: {
