@@ -65,14 +65,17 @@
             </div>
 
         </div>
-
+        <form class="d-flex justify-content-between " action="{{ route('fav', $book->id)}}" method="POST">
+            @csrf
         <div class="col-3 mt-3">
             <div class="d-flex justify-content-center">
-                <i class="fa fa-heart-o fa-pull-right mb-3" aria-hidden="true"></i>
+                <input type="hidden" name="book_id" value={{$book->id}}>
+                <button type="submit" class="btn" > <i class="fa fa-heart-o fa-pull-right mb-3" aria-hidden="true"></i></button>
             </div>
         </div>
 
     </div>
+    </form>
     <!-- End of Books -->
 
     <form class="d-flex justify-content-between " action="{{ route('comment', $book->id)}}" method="POST">

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\User;
 
 use App\Book;
@@ -11,7 +10,11 @@ use Carbon\Carbon;
 use Egulias\EmailValidator\Warning\Comment;
 use Illuminate\Support\Facades\DB;
 
-class CommentController extends Controller
+/**
+ * 
+ * this controller is responsible for all details about the books to the users
+ */
+class BooksController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -39,32 +42,9 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$id)
+    public function store(Request $request)
     {
-    
-  $validator=$request->validate([
-
-            'comment'=>'required|max:255|min:20',
-            'rate'=>'required',
-            'book_id'=>'unique:comments'
-        ]);
-        $userid=Auth()->user()->id;
-        $comment=$request->comment;
-        $rate=$request->rate;
-        $ratedat=Carbon::now();
-        $book = Book::find($id);
-        $message="your comment is added successfully";
-try {
-    DB::table('comments')->insert(
-        ['comment' => $comment, 'rate' => $rate, 'user_id' => $userid,'rated_at'=>$ratedat, 'book_id'=>$book->id]
-    );} 
-    
-    catch (\Illuminate\Database\QueryException $ex) {
-        $message = 'You Already Commented this book';
-    }
-   
-
-        return redirect('/books/'. $book->id)->with('message',$message);
+        //
     }
 
     /**
@@ -110,10 +90,5 @@ try {
     public function destroy($id)
     {
         //
-        $comment = Comment::findOrFail($id);
-        if ($comment->user_id==Auth()->user()->id){
-            $comment->delete();
-        }
-        return  Redirect::back();
     }
 }

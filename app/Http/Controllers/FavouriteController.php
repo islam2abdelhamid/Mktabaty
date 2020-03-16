@@ -1,17 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers;
 
 use App\Book;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades;
+use App\Favorites;
+use App\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Carbon\Carbon;
-use Egulias\EmailValidator\Warning\Comment;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
-class CommentController extends Controller
+class FavouriteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,30 +38,17 @@ class CommentController extends Controller
      */
     public function store(Request $request,$id)
     {
-    
-  $validator=$request->validate([
-
-            'comment'=>'required|max:255|min:20',
-            'rate'=>'required',
-            'book_id'=>'unique:comments'
-        ]);
-        $userid=Auth()->user()->id;
-        $comment=$request->comment;
-        $rate=$request->rate;
-        $ratedat=Carbon::now();
+        //
         $book = Book::find($id);
-        $message="your comment is added successfully";
-try {
-    DB::table('comments')->insert(
-        ['comment' => $comment, 'rate' => $rate, 'user_id' => $userid,'rated_at'=>$ratedat, 'book_id'=>$book->id]
-    );} 
-    
-    catch (\Illuminate\Database\QueryException $ex) {
-        $message = 'You Already Commented this book';
-    }
-   
 
+        $favourite=new Favorites();
+        $favourite->book_id=$request->book_id;
+        $favourite->user_id=Auth::id();
+        $message='Add book to your Favourites';
+        $favourite->save();
         return redirect('/books/'. $book->id)->with('message',$message);
+
+
     }
 
     /**
@@ -110,10 +94,5 @@ try {
     public function destroy($id)
     {
         //
-        $comment = Comment::findOrFail($id);
-        if ($comment->user_id==Auth()->user()->id){
-            $comment->delete();
-        }
-        return  Redirect::back();
     }
 }
