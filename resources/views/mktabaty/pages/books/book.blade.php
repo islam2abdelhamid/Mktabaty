@@ -264,7 +264,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                {{auth}}
+                
                 <form action="{{ route('bookLease', $book->id)}}" method="post" class="d-inline">
                     @csrf
                     @method('POST')
