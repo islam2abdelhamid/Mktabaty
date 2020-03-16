@@ -4,7 +4,7 @@
 
         <div class="card-body">
             <h4 class="card-title mb-0">
-                <a href="/book" class="no-decoration">{{$book->title}}</a>
+                <a href="{{route('books.show' ,['id'=> $book->id])}}" class="no-decoration">{{$book->title}}</a>
             </h4>
             <span class="text-secondary d-flex ">By {{$book->author}}</span>
 
@@ -23,8 +23,7 @@
             </div>
 
             <p class="card-text">
-                Lorem ipsum dolor sit amet consectetur adipisicingaerat sunt
-                maxime perspiciatis eligendi...
+                {{$book->description}}
             </p>
 
 

@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-3 mt-3">
             <div class="card card-plain">
-                <img class="card-img-top" src="assets/user/images/got.jpg" alt="book image" height="300px">
+                <img class="card-img-top" src={{asset("images/".$book->image)}} alt="book image" height="300px">
             </div>
         </div>
 
@@ -30,16 +30,13 @@
                 </div>
 
                 <p class="card-text">
-                    Lorem ipsum dolor sit amet consectetur adipisicingaerat sunt maxime perspiciatis
-                    eligendi Lorem ipsum dolor sit amet consectetur adipisicingaerat sunt maxime perspiciatis
-                    eligendi Lorem ipsum dolor sit amet consectetur adipisicingaerat sunt maxime perspiciatis
-                    eligendi...
+                    {{$book->description}}
                 </p>
 
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-secondary d-flex ">{{$book->available}} copies available</span>
                 </div>
-                <br/>
+                <br />
 
                 @if ($errors->any())
                 <div class="alert alert-danger">
@@ -50,15 +47,15 @@
                     </ul>
                 </div>
                 @elseif (session()->get('message'))
-                    @if(session()->get('message') === 'Enjoy Reading')
-                    <div class="alert alert-success">
-                        {{ session()->get('message') }}
-                    </div>
-                    @else
-                    <div class="alert alert-danger">
-                        {{ session()->get('message') }}
-                    </div>
-                    @endif
+                @if(session()->get('message') === 'Enjoy Reading')
+                <div class="alert alert-success">
+                    {{ session()->get('message') }}
+                </div>
+                @else
+                <div class="alert alert-danger">
+                    {{ session()->get('message') }}
+                </div>
+                @endif
                 @endif
 
                 <div>
@@ -267,8 +264,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form  action="{{ route('bookLease', $book->id)}}" method="post"
-                    class="d-inline">
+                {{auth}}
+                <form action="{{ route('bookLease', $book->id)}}" method="post" class="d-inline">
                     @csrf
                     @method('POST')
                     <div class="form-group">

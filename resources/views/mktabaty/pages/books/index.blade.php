@@ -4,5 +4,4 @@
 @foreach ($books as $book)
 @include('mktabaty.includes.book')
 @endforeach
-
 @stop
