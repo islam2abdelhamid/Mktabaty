@@ -38,22 +38,17 @@ Route::get('/books', function () {
 });
 
 
-Route::get('/book', function () {
-    return view('mktabaty.pages.books.book');
-});
-
 Route::prefix('admin')->group(function () {
     Route::resource('books', 'Admin\BookController')->middleware('can:view,App\User');
 
     Route::resource('category', 'Admin\CategoryController')->middleware('can:view,App\User');
-    Route::resource('cat', 'Admin\CategoryController')->middleware('can:view,App\User');
-    Route::resource('books', 'Admin\BookController')->middleware('can:view,App\User');
+    Route::resource('books', 'Admin\BookController');
 });
 
-Route::resource('books', 'Admin\BookController')->middleware('can:view,App\User');
+Route::get('/books/{id}', 'Admin\BookController@show')->middleware('auth');
 
 
-Route::get('/getBooks/{id}/', 'Admin\BookController@categoryBooks')->name('getBooks')->middleware('can:view,App\User');
+Route::get('/getBooks/{id}/', 'Admin\BookController@categoryBooks')->name('getBooks')->middleware('auth');
 Route::get('/', 'Admin\BookController@webBooks');
-Route::post('book/{id}', 'BookLeaseController@makeLease')->name('bookLease');
+Route::post('book/{id}', 'BookLeaseController@makeLease')->name('bookLease')->middleware('auth');;
 

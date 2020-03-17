@@ -39,19 +39,18 @@ class ReturnLeasedBook extends Command
      */
     public function handle()
     {
-
         try {
             DB::beginTransaction();
-           
-
+            $rows = DB::table('book_lease')->where('return_at', '<=', Carbon::now())->get();
             DB::table('book_lease')->where('return_at', '<=', Carbon::now())->delete();
-            DB::table('books')
-            ->where('id', $id)
-            ->increment('available');
+
+            foreach ($rows as $row) {
+                DB::table('books')->where('id', $row->book_id)->increment('available');
+            }
+
             DB::commit();
-            $message = 'Enjoy Reading';
         } catch (\Illuminate\Database\QueryException $ex) {
-            $message = 'You Already leased this book';
+            echo $ex;
         }
     }
 }
