@@ -23,7 +23,14 @@ class BooksController extends Controller
      */
     public function index()
     {
-        //
+        //   $favourites = Favorites::where('user_id', Auth::id())->pluck('book_id')->toArray();
+//         $books = Book::all();
+//         $rates = DB::table('comments')->select(DB::raw('avg(rate)as avg,book_id,comment'))
+//         ->where('rate', '!=', 0)
+//         ->groupBy('book_id','comment')->get();
+// // dd($rates);
+//         return view("mktabaty/includes/book", compact('favourites', 'books','rates'));        // "RatedBooks" => DB::table('comments')
+
     }
 
     /**

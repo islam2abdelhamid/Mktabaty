@@ -18,7 +18,7 @@ class CategoryController extends Controller
     {
         $books = Book::all();
         $categories = Category::all();
-        return view('dashboard.pages.books')->with('categories', $categories)->with('books', $books);
+        return view('dashboard.pages.books.index')->with('categories', $categories)->with('books', $books);
     }
 
     /**

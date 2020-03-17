@@ -4,18 +4,25 @@
 
         <div class="card-body">
             <h4 class="card-title mb-0">
-              <a href="{{route('books.show' ,['id'=> $book->id])}}" class="no-decoration">{{$book->title}}</a>
+                <a href="{{route('books.show' ,['id'=> $book->id])}}" class="no-decoration">{{$book->title}}</a>
             </h4>
             <span class="text-secondary d-flex ">By {{$book->author}}</span>
 
             <i class="fa fa-heart-o fa-pull-right mb-3" aria-hidden="true"></i>
 
             <div class="star-rating">
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star"></span>
+                @foreach ($rates as $rate)
+                @if($book->id === $rate->book_id)
+                    @for($i =1 ; $i<=5 ; $i++)
+                        @if($i<=$rate->avg)
+                        <span class="fa fa-star checked"></span>
+                        @else
+                        <span class="fa fa-star"></span>
+                        @endif
+                     @endfor
+                @endif    
+                @endforeach
+                
             </div>
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <span class="text-secondary d-flex ">available {{$book->available}}</span>

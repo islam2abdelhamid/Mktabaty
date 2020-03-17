@@ -38,10 +38,14 @@ Route::get('/favorites', function () {
     return view('mktabaty.pages.books.favorites');
 })->middleware(['auth']);
 
+   /**
+    * ERROR ROUTING caused by clickin on my Books in the nav bar
+    */
 
-Route::get('/books', function () {
-    return view('mktabaty.pages.books.user-books');
-});
+
+// Route::get('/books', function () {
+//     return view('mktabaty.pages.books.user-books');
+// });
 
 
 // Route::get('/book', function () {
@@ -62,6 +66,8 @@ Route::get('/', 'Admin\BookController@webBooks');
 Route::post('comment/{id}', 'User\CommentController@store')->name('comment');
 Route::post('fav/{id}', 'FavouriteController@store')->name('fav');
 Route::get('/favorites', 'FavouriteController@index');
+// app/Http/Controllers/User/BooksController.php
+// Route::get('/', 'User\BooksController@index');
 
 Route::post('book/{id}', 'BookLeaseController@makeLease')->name('bookLease');
 
