@@ -22,9 +22,9 @@ class BookController extends Controller
      */
     public function index()
     {
-        // $books = Book::all();
-        // $categories = Category::all();
-        // return view('mktabaty/pages/books/index', ['books' => $books, 'categories' => $categories]);
+        $books = Book::all();
+        $categories = Category::all();
+        return view('dashboard.pages.books.index', ['books' => $books, 'categories' => $categories]);
     }
 
     /**
@@ -172,7 +172,6 @@ class BookController extends Controller
         }
         // $books = Book::orderBy('id', 'desc')->where('category_id', $active)->paginate(3);
         $books = Book::all();
-
         return view('mktabaty/pages/books/index', compact('bookCategories', 'books', 'active'));
     }
 
