@@ -11,7 +11,6 @@ class Comment extends Model
     protected $fillable = ['user_id','comment','rate','book_id'];
     public function book()
     {
-        # code...
         return $this->belongsTo('App\Book');
     }
 

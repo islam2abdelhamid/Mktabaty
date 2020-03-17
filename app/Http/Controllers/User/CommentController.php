@@ -39,32 +39,32 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$id)
+    public function store(Request $request, $id)
     {
-    
-  $validator=$request->validate([
 
-            'comment'=>'required|max:255|min:20',
-            'rate'=>'required',
-            'book_id'=>'unique:comments'
+        $request->validate([
+
+            'comment' => 'required|max:255|min:20',
+            'rate' => 'required',
+            'book_id' => 'unique:comments'
         ]);
-        $userid=Auth()->user()->id;
-        $comment=$request->comment;
-        $rate=$request->rate;
-        $ratedat=Carbon::now();
+        $userid = Auth()->user()->id;
+        $comment = $request->comment;
+        $rate = $request->rate;
+        $ratedat = Carbon::now();
         $book = Book::find($id);
-        $message="your comment is added successfully";
-try {
-    DB::table('comments')->insert(
-        ['comment' => $comment, 'rate' => $rate, 'user_id' => $userid,'rated_at'=>$ratedat, 'book_id'=>$book->id]
-    );} 
-    
-    catch (\Illuminate\Database\QueryException $ex) {
-        $message = 'You Already Commented this book';
-    }
-   
+        $message = "your comment is added successfully";
+        try {
+            DB::table('comments')->insert(
+                ['comment' => $comment, 'rate' => $rate, 'user_id' => $userid, 'rated_at' => $ratedat, 'book_id' => $book->id]
+            );
+        } catch (\Illuminate\Database\QueryException $ex) {
+            $message = 'You Already Commented this book';
+        }
 
-        return redirect('admin/books/'. $book->id)->with('message',$message);
+
+
+        return redirect('admin/books/' . $book->id)->with('message', $message);
     }
 
     /**
@@ -111,7 +111,7 @@ try {
     {
         //
         $comment = Comment::findOrFail($id);
-        if ($comment->user_id==Auth()->user()->id){
+        if ($comment->user_id == Auth()->user()->id) {
             $comment->delete();
         }
         return  Redirect::back();

@@ -123,7 +123,7 @@ class BookController extends Controller
         $book->category_id = $request->category;
         $book->price = $request->price;
         $book->quantity = $request->quantity;
-        $book->available = $request->avaliable;
+        $book->available = $request->available;
 
 
         if (request()->image != null) {

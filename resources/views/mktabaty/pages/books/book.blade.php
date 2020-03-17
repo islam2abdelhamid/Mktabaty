@@ -52,7 +52,7 @@
                     {{ session()->get('message') }}
                 </div>
                 @else
-                <div class="alert alert-danger">
+                <div class="alert alert-success">
                     {{ session()->get('message') }}
                 </div>
                 @endif
@@ -117,6 +117,9 @@
 </div>
 
 <!-- show previous comment -->
+
+
+{{$book->comments()->get()}}
 
 <div class="d-flex">
     <div class="thumbnail d-flex justify-content-center">

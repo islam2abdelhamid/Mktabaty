@@ -27,5 +27,6 @@ class Book extends Model
     public function leasedBy(){
         return $this->BelongsToMany(User::class, 'book_lease');
     }
-    
+
+
 }

@@ -4,13 +4,13 @@
 
       Tip 2: you can also add an image using data-image tag
   -->
-    <div class="logo"><a href="#" class="simple-text logo-normal">
+    <div class="logo"><a href={{route("dashboard")}} class="simple-text logo-normal">
             Library Management
         </a></div>
     <div class="sidebar-wrapper">
         <ul class="nav">
-            <li class="{{ Request::is('admin/dashboard') ? 'nav-item active' : 'nav-item' }}">
-                <a class="nav-link" href="{{ route('dashboard') }}"> 
+            <li class="{{ Request::is('admin') ? 'nav-item active' : 'nav-item' }}">
+                <a class="nav-link" href="{{ route('dashboard') }}">
                     <i class="material-icons">dashboard</i>
                     <p>Dashboard</p>
                 </a>

@@ -30,7 +30,7 @@
             var auther = button.data('auther')
             var category = button.data('category')
             var quantity = button.data('quantity')
-            var avaliable = button.data('avaliable')
+            var available = button.data('available')
             var price = button.data('price')
             var action = button.data('action')
 
@@ -40,7 +40,7 @@
             modal.find('.modal-body #auther').val(auther)
             modal.find('.modal-body #category').val(category)
             modal.find('.modal-body #quantity').val(quantity)
-            modal.find('.modal-body #avaliable').val(avaliable)
+            modal.find('.modal-body #available').val(available)
             modal.find('.modal-body #price').val(price)
             {{--  modal.find('.modal-body #updateForm').attr("action",  "{{ url('books/'. action) }}" );  --}}
         })
