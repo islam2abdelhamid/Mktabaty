@@ -172,10 +172,23 @@ class BookController extends Controller
         }
         // $books = Book::orderBy('id', 'desc')->where('category_id', $active)->paginate(3);
         $books = Book::all();
+
         return view('mktabaty/pages/books/index', compact('bookCategories', 'books', 'active'));
     }
 
-    public function search(){
-        return "hi";
+    public function search(Request $request){
+
+        if ($request->selectButton == "title") {
+            $books = Book::query()
+                    ->where('title', 'LIKE', "%{$request->searchButton}%")
+                    ->get();
+        }else if ($request->selectButton == "author") {
+            $books = Book::query()
+                    ->where('author', 'LIKE', "%{$request->searchButton}%")
+                    ->get();
+        }else {
+            $books = Book::all();
+        }
+        return $this->webBooks()->with('books', $books);
     }
 }
