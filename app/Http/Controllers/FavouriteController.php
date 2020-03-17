@@ -25,11 +25,11 @@ class FavouriteController extends Controller
         $favourites = Favorites::where('user_id', Auth::id())->pluck('book_id')->toArray();
         $books = Book::all();
         $rates = DB::table('comments')->select(DB::raw('avg(rate)as avg,book_id,comment'))
-        ->where('rate', '!=', 0)
-        ->groupBy('book_id','comment')->get();
-// dd($rates);
+            ->where('rate', '!=', 0)
+            ->groupBy('book_id', 'comment')->get();
+        // dd($rates);
 
-        return view("mktabaty/pages/books/favorites", compact('favourites', 'books','rates'));        // "RatedBooks" => DB::table('comments')
+        return view("mktabaty/pages/books/favorites", compact('favourites', 'books', 'rates'));        // "RatedBooks" => DB::table('comments')
 
 
     }
@@ -52,15 +52,13 @@ class FavouriteController extends Controller
      */
     public function store(Request $request, $id)
     {
-        //
-        $book = Book::find($id);
-
+        
         $favourite = new Favorites();
         $favourite->book_id = $request->book_id;
         $favourite->user_id = Auth::id();
         $message = 'Add book to your Favourites';
         $favourite->save();
-        return redirect('admin/books/' . $book->id)->with('message', $message);
+        return redirect()->back()->with('message', $message);
     }
 
     /**

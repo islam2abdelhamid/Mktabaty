@@ -72,6 +72,12 @@
             </div>
 
         </div>
+        {{-- @if (auth::user()->leasedBooks()->get()->contains('book_id',$book->id)) --}}
+
+
+        @if (auth::user()->favoriteBooks()->get()->contains('id',$book->id))
+        <i class="fa fa-heart fa-pull-right mb-3" aria-hidden="true"></i>
+        @else
         <form class="d-flex justify-content-between " action="{{ route('fav', $book->id)}}" method="POST">
             @csrf
             <div class="col-3 mt-3">
@@ -81,11 +87,16 @@
                             aria-hidden="true"></i></button>
                 </div>
             </div>
+        </form>
+        @endif
 
     </div>
-    </form>
     <!-- End of Books -->
-
+    @if (auth::user()->rates()->get()->contains('id',$book->id))
+    <div class="alert alert-success">
+        You already rated this book, Thank You :)
+    </div>
+    @else
     <form class="d-flex justify-content-between " action="{{ route('comment', $book->id)}}" method="POST">
         <div class="form-group flex-grow-1">
             @csrf
@@ -103,6 +114,8 @@
             <input type="radio" id="star1" name="rate" value="1" /><label for="star1" title="1 star">1</label>
         </div>
     </form>
+    @endif
+
 
 </div>
 
@@ -135,7 +148,7 @@
                     @for ($i = 0; $i < $comment['rate']; $i++) <span class="fa fa-star checked commentRate"></span>
                         @endfor
                         @for ($i = 5; $i > $comment['rate']; $i--)
-                        <span class="fa fa-star checked commentRate"></span>
+                        <span class="fa fa-star  commentRate"></span>
                         @endfor
                 </div>
             </div>

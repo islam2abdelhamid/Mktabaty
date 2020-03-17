@@ -175,11 +175,9 @@ class BookController extends Controller
         }
         // $books = Book::orderBy('id', 'desc')->where('category_id', $active)->paginate(3);
         $books = Book::all();
-        $rates = DB::table('comments')->select(DB::raw('avg(rate)as avg,book_id,comment'))
-        ->where('rate', '!=', 0)
-        ->groupBy('book_id','comment')->get();
+   
 
-        return view('mktabaty/pages/books/index', compact('bookCategories', 'books', 'active','rates'));
+        return view('mktabaty/pages/books/index', compact('bookCategories', 'books', 'active'));
     }
 
     public function search(Request $request){
