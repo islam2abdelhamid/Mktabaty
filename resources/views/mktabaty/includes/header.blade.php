@@ -57,7 +57,7 @@
         {{-- <a  class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
           {{ Auth::user()->name }} <span class="caret"></span>
         </a> --}}
-        <img src="{{ Storage::url(Auth::user()->image) }}" width="60" height="40" alt="" title="">
+        <img src="{{asset("Userimages/".Auth::user()->image) }}" width="60" height="40" alt="" title="">
       </li>
       <li class="nav-item dropdown">
         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"

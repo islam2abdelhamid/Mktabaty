@@ -65,9 +65,11 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $newName = 'public/usersImgs/user.jpg';
+        $newName = 'user.jpg';
         if ($_FILES['image']['name'] != "") {
-            $newName = Storage::put('/public/usersImgs', $data['image']);
+            //$newName = Storage::put('/public/usersImgs', $data['image']);
+            $newName = time() . '.' . $data['image']->getClientOriginalExtension();
+            request()->image->move(public_path('Userimages'), $newName);
         }
             return User::create([
                 'name' => $data['name'],
