@@ -16,6 +16,5 @@
         </div>
     </div>
 
-    @yield('pagination')
 </div>
 @include('mktabaty.includes.footer')

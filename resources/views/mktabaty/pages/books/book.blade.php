@@ -135,11 +135,12 @@
 
 
 @foreach ($book->comments as $comment)
-<div class="d-flex">
+<div class="d-flex mt-3">
+    
     <div class="thumbnail d-flex justify-content-center">
-        <img class="img-responsive user-photo" src={{$comment->user['image']}}>
+        <img class="img-responsive user-photo" src={{asset("Userimages/".$comment->user->image) }} width="300px">
     </div>
-    <div class="card p-2">
+    <div class="card p-2 flex-grow-1">
         <div>
             <div class="d-flex justify-content-between align-items-center">
                 <strong>{{$comment->user['name']}}</strong>
@@ -157,7 +158,7 @@
         </div>
 
         <p>
-            {{$comment['commetn']}}
+            {{$comment['comment']}}
         </p>
     </div>
 
