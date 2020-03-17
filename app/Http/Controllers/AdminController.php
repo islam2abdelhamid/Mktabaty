@@ -90,9 +90,11 @@ class AdminController extends Controller
     public function store(Request $data)
     {
         //dd($data);
-        $newName = 'public/usersImgs/user.jpg';
+        $newName = 'user.jpg';
         if ($_FILES['image']['name'] != "") {
-            $newName = Storage::put('/public/usersImgs', $data['image']);
+            //$newName = Storage::put('/public/usersImgs', $data['image']);
+            $newName = time() . '.' . $data['image']->getClientOriginalExtension();
+            request()->image->move(public_path('Userimages'), $newName);
         }
         $user =User::create([
             'name' => $data['name'],
