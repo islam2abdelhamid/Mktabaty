@@ -2,7 +2,7 @@
 @section('content')
 
 @foreach ($books as $book)
-    <div class="col-md-4 mt-4">
+    {{-- <div class="col-md-4 mt-4">
         <div class="card">
             <img class="card-img-top" src={{ './../../../../../public/images/'.$book->image }} alt="book image" height="250px" />
             <div class="card-body">
@@ -34,7 +34,7 @@
             </div>
 
         </div>
-    </div>
+    </div> --}} 
 
 @include('mktabaty.includes.book')
 @endforeach
