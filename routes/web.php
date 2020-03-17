@@ -32,7 +32,7 @@ Route::post('admin/{admin}', 'AdminController@update')->name('admin.update')->mi
     //return view('mktabaty.pages.books.index');
 //});
 
-Route::get('/', 'Admin\BookController@index');
+// Route::get('/', 'Admin\BookController@index');
 
 
 Route::get('/favorites', function () {
@@ -45,9 +45,9 @@ Route::get('/books', function () {
 });
 
 
-Route::get('/book', function () {
-    return view('mktabaty.pages.books.book');
-});
+// Route::get('/book', function () {
+//     return view('mktabaty.pages.books.book');
+// });
 
 Route::prefix('admin')->group(function () {
     Route::resource('books', 'Admin\BookController')->middleware('can:view,App\User');
@@ -56,7 +56,6 @@ Route::prefix('admin')->group(function () {
     Route::resource('cat', 'Admin\CategoryController')->middleware('can:view,App\User');
 });
 
-Route::resource('books', 'Admin\BookController');
 
 
 Route::get('/getBooks/{id}/', 'Admin\BookController@categoryBooks')->name('getBooks');
