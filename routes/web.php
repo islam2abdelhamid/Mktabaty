@@ -18,14 +18,15 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('admin', 'AdminController@listAdmins')->name('listUsers')->middleware('can:view,App\User');
+Route::get('admin', 'AdminController@index')->name('listUsers')->middleware('can:view,App\User');
 Route::get('admin/users', 'AdminController@listUsers')->name('listUsers')->middleware('can:view,App\User');
 Route::get('admin/admins', 'AdminController@listAdmins')->name('listAdmins')->middleware('can:view,App\User');
 Route::get('admin/dashboard', 'AdminController@index')->name('dashboard')->middleware('can:view,App\User');
 Route::get('admin/change/{id}', 'AdminController@ChangeActiveState')->name('ChangeActiveState')->middleware('can:view,App\User');
 Route::get('admin/deleteUser/{id}', 'AdminController@destroy')->name('destroy')->middleware('can:view,App\User');
 Route::post('admin/addAdmin', 'AdminController@store')->name('addAdmin')->middleware('can:view,App\User');
-//Route::get('/', 'Admin\BookController@index')->middleware('can:view,App\User'); repeated and un used route
+Route::get('admin/{admin}/edit', 'AdminController@edit')->name('admin.edit')->middleware('can:view,App\User');
+Route::post('admin/{admin}', 'AdminController@update')->name('admin.update')->middleware('can:view,App\User');
 
 //Route::get('/', function () {
     //return view('mktabaty.pages.books.index');
@@ -53,7 +54,6 @@ Route::prefix('admin')->group(function () {
 
     Route::resource('category', 'Admin\CategoryController')->middleware('can:view,App\User');
     Route::resource('cat', 'Admin\CategoryController')->middleware('can:view,App\User');
-    Route::resource('books', 'Admin\BookController')->middleware('can:view,App\User');
 });
 
 Route::resource('books', 'Admin\BookController');
@@ -66,4 +66,9 @@ Route::post('fav/{id}', 'FavouriteController@store')->name('fav');
 Route::get('/favorites', 'FavouriteController@index');
 
 Route::post('book/{id}', 'BookLeaseController@makeLease')->name('bookLease');
+
+Route::get('user/{user}/edit', 'User\ProfileController@edit')->name('user.edit');
+Route::post('user/{user}', 'User\ProfileController@update')->name('user.update');
+
+
 

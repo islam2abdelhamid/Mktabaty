@@ -9,6 +9,7 @@ use App\Http\Controllers\BookLeaseController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\UpdateProfile;
 
 class AdminController extends Controller
 {
@@ -123,7 +124,9 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        //
+        
+        $user = User::find($id);
+        return view('dashboard.pages.profile' , ['admin'=>$user]);
     }
 
     /**
@@ -133,9 +136,22 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProfile $request, $id)
     {
-        //
+
+        $admin = User::find($id);
+        $admin->name = $request->name;
+        $admin->username = $request->username;
+        $admin->password = Hash::make($request->password);
+
+
+        if (request()->image != null) {
+            $imageName = time() . '.' . request()->image->getClientOriginalExtension();
+            request()->image->move(public_path('images'), $imageName);
+            $admin->image = $imageName;
+        }
+        $admin->save();
+        return redirect('admin')->with('message', 'Your profile is updated successfully');
     }
 
     /**
