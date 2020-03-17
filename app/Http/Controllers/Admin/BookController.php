@@ -22,9 +22,9 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::all();
-        $categories = Category::all();
-        return view('dashboard.pages.books.index', ['books' => $books, 'categories' => $categories]);
+        // $books = Book::all();
+        // $categories = Category::all();
+        // return view('mktabaty/pages/books/index', ['books' => $books, 'categories' => $categories]);
     }
 
     /**
@@ -123,7 +123,7 @@ class BookController extends Controller
         $book->category_id = $request->category;
         $book->price = $request->price;
         $book->quantity = $request->quantity;
-        $book->available = $request->available;
+        $book->available = $request->avaliable;
 
 
         if (request()->image != null) {
@@ -132,7 +132,7 @@ class BookController extends Controller
             $book->image = $imageName;
         }
         $book->save();
-        return $this->index()->with('message', 'Book updated successfully');
+        return back()->with('message', 'Book updated successfully');
     }
 
     /**
@@ -170,8 +170,13 @@ class BookController extends Controller
         if (isset($category)) {
             $active = $category->id;
         }
-        $books = Book::orderBy('id', 'desc')->where('category_id', $active)->paginate(3);
+        // $books = Book::orderBy('id', 'desc')->where('category_id', $active)->paginate(3);
+        $books = Book::all();
 
         return view('mktabaty/pages/books/index', compact('bookCategories', 'books', 'active'));
+    }
+
+    public function search(){
+        return "hi";
     }
 }

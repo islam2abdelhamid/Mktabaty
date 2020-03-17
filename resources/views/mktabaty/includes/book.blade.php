@@ -26,7 +26,6 @@
                 {{$book->description}}
             </p>
 
-
         </div>
 
     </div>

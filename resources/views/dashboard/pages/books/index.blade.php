@@ -160,7 +160,7 @@
                         <h4 class="card-title">Book Form</h4>
                     </div>
                     <div class="card-body modal-body">
-                        <form method="POST" action="{{ url('books/') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ url('books') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-md-10">

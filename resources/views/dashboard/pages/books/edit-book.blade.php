@@ -95,7 +95,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="bmd-label-floating">avaliable</label>
-                            <input type="number" class="form-control" name="available" id="avaliable"
+                            <input type="number" class="form-control" name="avaliable" id="avaliable"
                                 value={{$book->available}}>
                         </div>
                     </div>

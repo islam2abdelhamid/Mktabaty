@@ -31,7 +31,7 @@ Route::post('admin/addAdmin', 'AdminController@store')->name('addAdmin')->middle
     //return view('mktabaty.pages.books.index');
 //});
 
-Route::get('/', 'Admin\BookController@index');
+Route::get('bookSearch', 'Admin\BookController@search');
 
 
 Route::get('/favorites', function () {

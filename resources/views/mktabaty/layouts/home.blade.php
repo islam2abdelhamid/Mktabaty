@@ -15,7 +15,6 @@
         <div class="col-md-9">
             @include('mktabaty.includes.search-form')
             <div class="row">
-                {{-- Books List --}}
                 @yield('content')
             </div>
 
@@ -36,7 +35,7 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-
+<script src="../../../js/app.js"></script>
 </body>
 
 </html>
