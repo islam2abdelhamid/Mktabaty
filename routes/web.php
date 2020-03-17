@@ -58,6 +58,9 @@ Route::post('fav/{id}', 'FavouriteController@store')->name('fav');
 Route::get('/favorites', 'FavouriteController@index');
 
 
+Route::get('mybooks/', function () {
+    return view('mktabaty.pages.books.user-books');
+});
 Route::get('books/{id}', 'Admin\BookController@show')->name('showBook');
 Route::post('books/{id}', 'BookLeaseController@makeLease')->name('bookLease');
 

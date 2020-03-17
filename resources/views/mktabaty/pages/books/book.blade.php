@@ -179,14 +179,9 @@
 </div><!-- /row -->
 
 <div class="row">
-    <div class="col-md-1 mt-4 vertical-center">
-        <div class="pagination">
-            <a href="#">❮</a>
-        </div>
-    </div>
 
     @foreach ($book->category->books as $book)
-    <div class="col-md-2 mt-4">
+    <div class="col mt-4">
         <div class="card card-plain">
             <img class="card-img-top" src={{asset("images/".$book->image)}} alt="book image" height="250px">
 
@@ -206,14 +201,6 @@
     </div>
     @endforeach
 
-
-
-
-    <div class="col-md-1 mt-4 vertical-center">
-        <div class="pagination">
-            <a href="#">❯</a>
-        </div>
-    </div>
 
 </div>
 

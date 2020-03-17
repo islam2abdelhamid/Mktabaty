@@ -22,9 +22,13 @@
       <li class="nav-item">
         <a class="nav-link" href="/favorites">Favorites</a>
       </li>
+
+      @auth
       <li class="nav-item">
-        <a class="nav-link" href="books">My Books</a>
+        <a class="nav-link" href="/mybooks">My Books</a>
       </li>
+      @endauth
+   
     </ul>
   </div>
 

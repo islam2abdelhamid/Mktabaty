@@ -1,14 +1,20 @@
 @extends('mktabaty.layouts.default')
 
 @section('title')
-    <h1>Your Books</h1>
+<h1>Your Books</h1>
 @endsection
 
 @section('content')
-    <!-- Start Of Book-->
-    <div class="col-md-4 mt-4">
-    @include('mktabaty.includes.book')
+<!-- Start Of Book-->
+@if (count(auth::user()->leasedBooks)>0)
+@foreach (auth::user()->leasedBooks as $book)
+@include('mktabaty.includes.book')
+@endforeach
+@else
+    <h1 class="text-center">You have no books :)</h1>
+@endif
 
-    </div>
-    <!-- End Of Book-->
+
+
+<!-- End Of Book-->
 @stop
