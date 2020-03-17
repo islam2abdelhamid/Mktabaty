@@ -64,7 +64,7 @@ try {
     }
    
 
-        return redirect('/books/'. $book->id)->with('message',$message);
+        return redirect('admin/books/'. $book->id)->with('message',$message);
     }
 
     /**

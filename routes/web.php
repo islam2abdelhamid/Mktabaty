@@ -39,9 +39,9 @@ Route::get('/favorites', function () {
 })->middleware(['auth']);
 
 
-// Route::get('/books', function () {
-//     return view('mktabaty.pages.books.user-books');
-// });
+Route::get('/books', function () {
+    return view('mktabaty.pages.books.user-books');
+});
 
 
 // Route::get('/book', function () {

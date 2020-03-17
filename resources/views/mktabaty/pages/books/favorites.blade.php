@@ -20,11 +20,17 @@
 
       </div>
       <div class="star-rating">
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star"></span>
+        @foreach ($rates as $rate)
+        @if($book->id === $rate->book_id)
+            @for($i =1 ; $i<=5 ; $i++)
+                @if($i<=$rate->avg)
+                <span class="fa fa-star checked"></span>
+                @else
+                <span class="fa fa-star"></span>
+                @endif
+             @endfor
+        @endif    
+        @endforeach
       </div>
       <div class="d-flex justify-content-between align-items-center mb-3">
         <span class="text-secondary d-flex ">{{ $book->quantity }}</span>
@@ -32,8 +38,14 @@
       </div>
 
       <p class="card-text">
-        Lorem ipsum dolor sit amet consectetur adipisicingaerat sunt
-        maxime perspiciatis eligendi...
+        @foreach ($rates as $rate)
+        @if($book->id === $rate->book_id)
+       {{ $rate->comment }}
+       
+       @endif
+
+       @endforeach
+
       </p>
 
 
