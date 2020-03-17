@@ -15,7 +15,8 @@ class Book extends Model
     }
 
     //aml 
-    public function user(){ 
+    public function user()
+    {
         return $this->belongsTo('App\User');
     }
 
@@ -24,9 +25,22 @@ class Book extends Model
         return $this->hasMany('App\Comment');
     }
 
-    public function leasedBy(){
+    public function leasedBy()
+    {
         return $this->BelongsToMany(User::class, 'book_lease');
     }
 
+    public function getRates()
+    {
+        $totalRate = 0;
+        $ratesCount = count($this->comments);
+        if ($ratesCount > 0) {
+            foreach ($this->comments as $comment) {
+                $totalRate += $comment['rate'];
+            }
 
+            return floor($totalRate / $ratesCount);
+        } else
+            return 0;
+    }
 }

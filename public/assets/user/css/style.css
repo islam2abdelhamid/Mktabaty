@@ -105,6 +105,7 @@ nav.navbar {
     font-size: 1.4rem;
 }
 
+.fa-heart,
 .fa-heart-o:hover::before {
     cursor: pointer;
     content: "\f004";

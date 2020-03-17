@@ -72,25 +72,38 @@
             </div>
 
         </div>
+        {{-- @if (auth::user()->leasedBooks()->get()->contains('book_id',$book->id)) --}}
+
+
+        @if (auth::user()->favoriteBooks()->get()->contains('id',$book->id))
+        <i class="fa fa-heart fa-pull-right mb-3" aria-hidden="true"></i>
+        @else
         <form class="d-flex justify-content-between " action="{{ route('fav', $book->id)}}" method="POST">
             @csrf
-        <div class="col-3 mt-3">
-            <div class="d-flex justify-content-center">
-                <input type="hidden" name="book_id" value={{$book->id}}>
-                <button type="submit" class="btn" > <i class="fa fa-heart-o fa-pull-right mb-3" aria-hidden="true"></i></button>
+            <div class="col-3 mt-3">
+                <div class="d-flex justify-content-center">
+                    <input type="hidden" name="book_id" value={{$book->id}}>
+                    <button type="submit" class="btn"> <i class="fa fa-heart-o fa-pull-right mb-3"
+                            aria-hidden="true"></i></button>
+                </div>
             </div>
-        </div>
+        </form>
+        @endif
 
     </div>
-    </form>
     <!-- End of Books -->
-
+    @if (auth::user()->rates()->get()->contains('id',$book->id))
+    <div class="alert alert-success">
+        You already rated this book, Thank You :)
+    </div>
+    @else
     <form class="d-flex justify-content-between " action="{{ route('comment', $book->id)}}" method="POST">
         <div class="form-group flex-grow-1">
             @csrf
             @method('POST')
 
-            <textarea class="form-control" rows="5" id="comment" name="comment" placeholder="Your Comment..."></textarea>
+            <textarea class="form-control" rows="5" id="comment" name="comment"
+                placeholder="Your Comment..."></textarea>
             <input type="submit" class="btn btn-primary btn-block commentButton" value="Comment" />
         </div>
         <div class="starrating risingstar d-flex justify-content-center flex-row-reverse" name="rate">
@@ -101,6 +114,8 @@
             <input type="radio" id="star1" name="rate" value="1" /><label for="star1" title="1 star">1</label>
         </div>
     </form>
+    @endif
+
 
 </div>
 
@@ -119,36 +134,37 @@
 <!-- show previous comment -->
 
 
-{{$book->comments()->get()}}
-
+@foreach ($book->comments as $comment)
 <div class="d-flex">
     <div class="thumbnail d-flex justify-content-center">
-        <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+        <img class="img-responsive user-photo" src={{$comment->user['image']}}>
     </div>
     <div class="card p-2">
         <div>
             <div class="d-flex justify-content-between align-items-center">
-                <strong>myusername</strong>
+                <strong>{{$comment->user['name']}}</strong>
+
                 <div class="star-rating d-flex justify-content-center rate">
-                    <span class="fa fa-star checked commentRate"></span>
-                    <span class="fa fa-star checked commentRate"></span>
-                    <span class="fa fa-star checked commentRate"></span>
-                    <span class="fa fa-star checked commentRate"></span>
-                    <span class="fa fa-star commentRate"></span>
+                    @for ($i = 0; $i < $comment['rate']; $i++) <span class="fa fa-star checked commentRate"></span>
+                        @endfor
+                        @for ($i = 5; $i > $comment['rate']; $i--)
+                        <span class="fa fa-star  commentRate"></span>
+                        @endfor
                 </div>
             </div>
 
-            <span class="text-muted"><time datetime="2014-12-16T01:05">Dec 16, 2019 01:25 AM</time></span>
+            <span class="text-muted"><time datetime="2014-12-16T01:05">{{$comment['rated_at']}}</time></span>
         </div>
 
         <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            {{$comment['commetn']}}
         </p>
     </div>
 
 </div>
+@endforeach
+
+
 
 
 <!-- End show previous comment -->
@@ -169,85 +185,29 @@
         </div>
     </div>
 
+    @foreach ($book->category->books as $book)
     <div class="col-md-2 mt-4">
         <div class="card card-plain">
-            <img class="card-img-top" src="assets/user/images/got.jpg" alt="book image" height="250px">
+            <img class="card-img-top" src={{asset("images/".$book->image)}} alt="book image" height="250px">
 
             <div class="card-body">
                 <div class="d-flex justify-content-between">
-                    <h4 class="card-title"><a href="#" class="no-decoration">Book Title</a></h4>
+
+                    <h4 class="card-title"> <a href="{{route('showBook' ,['id'=> $book->id])}}"
+                            class="no-decoration">{{$book->title}}</a>
+                    </h4>
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="text-secondary d-flex ">4 copies available</span>
+                    <span class="text-secondary d-flex ">available copies {{$book->available}} </span>
                 </div>
             </div>
         </div>
     </div>
+    @endforeach
 
-    <div class="col-md-2 mt-4">
-        <div class="card card-plain">
-            <img class="card-img-top" src="assets/user/images/got.jpg" alt="book image" height="250px">
 
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <h4 class="card-title"><a href="#" class="no-decoration">Book Title</a></h4>
-                </div>
 
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="text-secondary d-flex ">4 copies available</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-2 mt-4">
-        <div class="card card-plain">
-            <img class="card-img-top" src="assets/user/images/got.jpg" alt="book image" height="250px">
-
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <h4 class="card-title"><a href="#" class="no-decoration">Book Title</a></h4>
-                </div>
-
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="text-secondary d-flex ">4 copies available</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-2 mt-4">
-        <div class="card card-plain">
-            <img class="card-img-top" src="assets/user/images/got.jpg" alt="book image" height="250px">
-
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <h4 class="card-title"><a href="#" class="no-decoration">Book Title</a></h4>
-                </div>
-
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="text-secondary d-flex ">4 copies available</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-2 mt-4">
-        <div class="card card-plain">
-            <img class="card-img-top" src="assets/user/images/got.jpg" alt="book image" height="250px">
-
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <h4 class="card-title"><a href="#" class="no-decoration">Book Title</a></h4>
-                </div>
-
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="text-secondary d-flex ">4 copies available</span>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="col-md-1 mt-4 vertical-center">
         <div class="pagination">

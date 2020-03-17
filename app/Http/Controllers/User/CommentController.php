@@ -64,7 +64,7 @@ class CommentController extends Controller
 
 
 
-        return redirect('admin/books/' . $book->id)->with('message', $message);
+        return redirect()->back()->with('message', $message);
     }
 
     /**
