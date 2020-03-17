@@ -1,13 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Category;
 use App\Book;
+use App\Category;
+use App\Favorites;
+use App\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
-class CategoryController extends Controller
+class FavouriteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +20,18 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        //
+
+        $favourites = Favorites::where('user_id', Auth::id())->pluck('book_id')->toArray();
         $books = Book::all();
-        $categories = Category::all();
-        return view('dashboard.pages.books.index')->with('categories', $categories)->with('books', $books);
+        $rates = DB::table('comments')->select(DB::raw('avg(rate)as avg,book_id,comment'))
+        ->where('rate', '!=', 0)
+        ->groupBy('book_id','comment')->get();
+// dd($rates);
+
+        return view("mktabaty/pages/books/favorites", compact('favourites', 'books','rates'));        // "RatedBooks" => DB::table('comments')
+
+
     }
 
     /**
@@ -29,7 +42,6 @@ class CategoryController extends Controller
     public function create()
     {
         //
-        return view('categories.create');
     }
 
     /**
@@ -38,17 +50,17 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
         //
-        $validatedData =  $request->validate([
-            'name' => 'required|max:255|unique:categories|string'
-        ]);
+        $book = Book::find($id);
 
-
-        Category::create($validatedData);
-
-        return redirect()->route('books.index')->with('message', 'Category is successfully saved');
+        $favourite = new Favorites();
+        $favourite->book_id = $request->book_id;
+        $favourite->user_id = Auth::id();
+        $message = 'Add book to your Favourites';
+        $favourite->save();
+        return redirect('admin/books/' . $book->id)->with('message', $message);
     }
 
     /**
@@ -70,9 +82,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-
-        $category = Category::findOrNew($id);
-        return view('dashboard.pages.books.edit-category', ['category' => $category]);
+        //
     }
 
     /**
@@ -85,14 +95,6 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         //
-
-        $validatedData =  $request->validate([
-            'name' => 'required|max:255|unique:categories|string'
-        ]);
-
-
-        Category::whereId($id)->update($validatedData);
-        return redirect()->route('books.index')->with('message', 'Category updated successfully');
     }
 
     /**
@@ -104,9 +106,5 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         //
-        $category = Category::findOrFail($id);
-        $category->delete();
-
-        return redirect()->route('books.index')->with('message', 'Category is successfully Deleted');
     }
 }

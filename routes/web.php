@@ -18,37 +18,64 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('admin', 'AdminController@listAdmins')->name('listUsers')->middleware('can:view,App\User');
+Route::get('admin', 'AdminController@index')->name('listUsers')->middleware('can:view,App\User');
 Route::get('admin/users', 'AdminController@listUsers')->name('listUsers')->middleware('can:view,App\User');
 Route::get('admin/admins', 'AdminController@listAdmins')->name('listAdmins')->middleware('can:view,App\User');
 Route::get('admin/dashboard', 'AdminController@index')->name('dashboard')->middleware('can:view,App\User');
 Route::get('admin/change/{id}', 'AdminController@ChangeActiveState')->name('ChangeActiveState')->middleware('can:view,App\User');
 Route::get('admin/deleteUser/{id}', 'AdminController@destroy')->name('destroy')->middleware('can:view,App\User');
 Route::post('admin/addAdmin', 'AdminController@store')->name('addAdmin')->middleware('can:view,App\User');
-//Route::get('/', 'Admin\BookController@index')->middleware('can:view,App\User'); repeated and un used route
+Route::get('admin/{admin}/edit', 'AdminController@edit')->name('admin.edit')->middleware('can:view,App\User');
+Route::post('admin/{admin}', 'AdminController@update')->name('admin.update')->middleware('can:view,App\User');
+
+//Route::get('/', function () {
+    //return view('mktabaty.pages.books.index');
+//});
+
+//Route::get('/', 'Admin\BookController@index');
+
+Route::get('bookSearch', 'Admin\BookController@search');
 
 
 Route::get('/favorites', function () {
     return view('mktabaty.pages.books.favorites');
 })->middleware(['auth']);
 
+   /**
+    * ERROR ROUTING caused by clickin on my Books in the nav bar
+    */
 
-Route::get('/books', function () {
-    return view('mktabaty.pages.books.user-books');
-});
 
+// Route::get('/books', function () {
+//     return view('mktabaty.pages.books.user-books');
+// });
+
+
+// Route::get('/book', function () {
+//     return view('mktabaty.pages.books.book');
+// });
 
 Route::prefix('admin')->group(function () {
     Route::resource('books', 'Admin\BookController')->middleware('can:view,App\User');
 
     Route::resource('category', 'Admin\CategoryController')->middleware('can:view,App\User');
-    Route::resource('books', 'Admin\BookController');
+    Route::resource('cat', 'Admin\CategoryController')->middleware('can:view,App\User');
 });
 
-Route::get('/books/{id}', 'Admin\BookController@show')->middleware('auth');
 
 
-Route::get('/getBooks/{id}/', 'Admin\BookController@categoryBooks')->name('getBooks')->middleware('auth');
+Route::get('/getBooks/{id}/', 'Admin\BookController@categoryBooks')->name('getBooks');
 Route::get('/', 'Admin\BookController@webBooks');
-Route::post('book/{id}', 'BookLeaseController@makeLease')->name('bookLease')->middleware('auth');;
+Route::post('comment/{id}', 'User\CommentController@store')->name('comment');
+Route::post('fav/{id}', 'FavouriteController@store')->name('fav');
+Route::get('/favorites', 'FavouriteController@index');
+// app/Http/Controllers/User/BooksController.php
+// Route::get('/', 'User\BooksController@index');
+
+Route::post('book/{id}', 'BookLeaseController@makeLease')->name('bookLease');
+
+Route::get('user/{user}/edit', 'User\ProfileController@edit')->name('user.edit');
+Route::post('user/{user}', 'User\ProfileController@update')->name('user.update');
+
+
 

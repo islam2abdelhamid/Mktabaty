@@ -11,11 +11,18 @@
             <i class="fa fa-heart-o fa-pull-right mb-3" aria-hidden="true"></i>
 
             <div class="star-rating">
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star"></span>
+                @foreach ($rates as $rate)
+                @if($book->id === $rate->book_id)
+                    @for($i =1 ; $i<=5 ; $i++)
+                        @if($i<=$rate->avg)
+                        <span class="fa fa-star checked"></span>
+                        @else
+                        <span class="fa fa-star"></span>
+                        @endif
+                     @endfor
+                @endif    
+                @endforeach
+                
             </div>
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <span class="text-secondary d-flex ">available {{$book->available}}</span>
@@ -25,7 +32,6 @@
             <p class="card-text">
                 {{$book->description}}
             </p>
-
 
         </div>
 

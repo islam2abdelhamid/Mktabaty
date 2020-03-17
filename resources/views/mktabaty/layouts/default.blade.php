@@ -11,7 +11,6 @@
         <div class="col-md-9 offset-1">
             @include('mktabaty.includes.search-form')
             <div class="row">
-                {{-- Books List --}}
                 @yield('content')
             </div>
 

@@ -1,8 +1,8 @@
 <?php
-
 namespace App\Http\Controllers\User;
 
 use App\Book;
+use App\User;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades;
 use Illuminate\Http\Request;
@@ -10,8 +10,13 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Egulias\EmailValidator\Warning\Comment;
 use Illuminate\Support\Facades\DB;
-
-class CommentController extends Controller
+use App\Http\Requests\UpdateProfile;
+use Illuminate\Support\Facades\Hash;
+/**
+ * 
+ * this controller is responsible for all details about the books to the users
+ */
+class ProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +25,14 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        //   $favourites = Favorites::where('user_id', Auth::id())->pluck('book_id')->toArray();
+//         $books = Book::all();
+//         $rates = DB::table('comments')->select(DB::raw('avg(rate)as avg,book_id,comment'))
+//         ->where('rate', '!=', 0)
+//         ->groupBy('book_id','comment')->get();
+// // dd($rates);
+//         return view("mktabaty/includes/book", compact('favourites', 'books','rates'));        // "RatedBooks" => DB::table('comments')
+
     }
 
     /**
@@ -39,32 +51,9 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$id)
+    public function store(Request $request)
     {
-    
-  $validator=$request->validate([
-
-            'comment'=>'required|max:255|min:20',
-            'rate'=>'required',
-            'book_id'=>'unique:comments'
-        ]);
-        $userid=Auth()->user()->id;
-        $comment=$request->comment;
-        $rate=$request->rate;
-        $ratedat=Carbon::now();
-        $book = Book::find($id);
-        $message="your comment is added successfully";
-try {
-    DB::table('comments')->insert(
-        ['comment' => $comment, 'rate' => $rate, 'user_id' => $userid,'rated_at'=>$ratedat, 'book_id'=>$book->id]
-    );} 
-    
-    catch (\Illuminate\Database\QueryException $ex) {
-        $message = 'You Already Commented this book';
-    }
-   
-
-        return redirect('admin/books/'. $book->id)->with('message',$message);
+        //
     }
 
     /**
@@ -86,7 +75,9 @@ try {
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        
+        return view("mktabaty/pages/user/profile", ['user'=>$user]);  
     }
 
     /**
@@ -96,9 +87,24 @@ try {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProfile $request, $id)
     {
-        //
+        
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->username = $request->username;
+        $user->password = Hash::make($request->password);
+
+
+        if (request()->image != null) {
+            $imageName = time() . '.' . request()->image->getClientOriginalExtension();
+            request()->image->move(public_path('images'), $imageName);
+            $user->image = $imageName;
+        }
+        $user->save();
+        return redirect('/')->with('message', 'Your profile is updated successfully');
+
+
     }
 
     /**
@@ -110,10 +116,5 @@ try {
     public function destroy($id)
     {
         //
-        $comment = Comment::findOrFail($id);
-        if ($comment->user_id==Auth()->user()->id){
-            $comment->delete();
-        }
-        return  Redirect::back();
     }
 }

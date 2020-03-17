@@ -2,6 +2,11 @@
 @include('mktabaty.includes.header')
 
 <section id="hero">
+    @if(session()->get('message'))
+        <div class="col-xl-12 col-lg-12 alert alert-success text-center">
+            {{ session()->get('message') }}
+        </div><br/>
+    @endif
     <div class="overly">
         <h1 class="display-3">Welcome To Mktabaty</h1>
     </div>
@@ -15,7 +20,6 @@
         <div class="col-md-9">
             @include('mktabaty.includes.search-form')
             <div class="row">
-                {{-- Books List --}}
                 @yield('content')
             </div>
 
@@ -36,7 +40,7 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-
+<script src="../../../js/app.js"></script>
 </body>
 
 </html>
