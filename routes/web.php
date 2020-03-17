@@ -41,24 +41,22 @@ Route::get('/favorites', function () {
 })->middleware(['auth']);
 
 
-Route::get('/books', function () {
-    return view('mktabaty.pages.books.user-books');
-});
+// Route::get('/books', function () {
+//     return view('mktabaty.pages.books.user-books');
+// });
 
 
-Route::get('/book', function () {
-    return view('mktabaty.pages.books.book');
-});
+// Route::get('/book', function () {
+//     return view('mktabaty.pages.books.book');
+// });
 
 Route::prefix('admin')->group(function () {
     Route::resource('books', 'Admin\BookController')->middleware('can:view,App\User');
 
     Route::resource('category', 'Admin\CategoryController')->middleware('can:view,App\User');
     Route::resource('cat', 'Admin\CategoryController')->middleware('can:view,App\User');
-    Route::resource('books', 'Admin\BookController')->middleware('can:view,App\User');
 });
 
-Route::resource('books', 'Admin\BookController');
 
 
 Route::get('/getBooks/{id}/', 'Admin\BookController@categoryBooks')->name('getBooks');

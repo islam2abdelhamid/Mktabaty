@@ -165,14 +165,16 @@ class BookController extends Controller
     public function webBooks()
     {
         $active = null;
+
         $bookCategories = Category::all();
+
         $category  = Category::orderBy('created_at', 'asc')->first();
+
         if (isset($category)) {
             $active = $category->id;
         }
         // $books = Book::orderBy('id', 'desc')->where('category_id', $active)->paginate(3);
         $books = Book::all();
-
         return view('mktabaty/pages/books/index', compact('bookCategories', 'books', 'active'));
     }
 

@@ -9,14 +9,14 @@
 <div class="col-md-4 mt-4">
   <div class="card card-plain">
 
-  <img class="card-img-top" src="{{ $book->image }}" alt="book image" height="250px" />
+  <img class="card-img-top" src="{{ './../../../../../public/images/'.$book->image }}" alt="book image" height="250px" />
 
     <div class="card-body">
       <div class="d-flex justify-content-between">
         <h4 class="card-title">
           <a href="/book" class="no-decoration">{{ $book->title }}</a>
         </h4>
-        <i class="fa fa-heart-o fa-pull-right mb-3" aria-hidden="true"></i>
+        <i class="fa fa-heart fa-pull-right mb-3 "   aria-hidden="true"></i>
 
       </div>
       <div class="star-rating">
