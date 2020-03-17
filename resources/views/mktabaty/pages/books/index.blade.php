@@ -34,7 +34,7 @@
             </div>
 
         </div>
-    </div> --}} 
+    </div> --}}
 
 @include('mktabaty.includes.book')
 @endforeach

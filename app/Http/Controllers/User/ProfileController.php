@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Book;
+use App\User;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades;
 use Illuminate\Http\Request;
@@ -9,12 +10,13 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Egulias\EmailValidator\Warning\Comment;
 use Illuminate\Support\Facades\DB;
-
+use App\Http\Requests\UpdateProfile;
+use Illuminate\Support\Facades\Hash;
 /**
  * 
  * this controller is responsible for all details about the books to the users
  */
-class BooksController extends Controller
+class ProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -73,7 +75,9 @@ class BooksController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        
+        return view("mktabaty/pages/user/profile", ['user'=>$user]);  
     }
 
     /**
@@ -83,9 +87,24 @@ class BooksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProfile $request, $id)
     {
-        //
+        
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->username = $request->username;
+        $user->password = Hash::make($request->password);
+
+
+        if (request()->image != null) {
+            $imageName = time() . '.' . request()->image->getClientOriginalExtension();
+            request()->image->move(public_path('images'), $imageName);
+            $user->image = $imageName;
+        }
+        $user->save();
+        return redirect('/')->with('message', 'Your profile is updated successfully');
+
+
     }
 
     /**

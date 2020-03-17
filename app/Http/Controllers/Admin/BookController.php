@@ -123,7 +123,7 @@ class BookController extends Controller
         $book->category_id = $request->category;
         $book->price = $request->price;
         $book->quantity = $request->quantity;
-        $book->available = $request->quantity;
+        $book->available = $request->avaliable;
 
 
         if (request()->image != null) {
@@ -165,24 +165,36 @@ class BookController extends Controller
     public function webBooks()
     {
         $active = null;
-        
+
         $bookCategories = Category::all();
-        
+
         $category  = Category::orderBy('created_at', 'asc')->first();
-        
+
         if (isset($category)) {
             $active = $category->id;
         }
-
         // $books = Book::orderBy('id', 'desc')->where('category_id', $active)->paginate(3);
         $books = Book::all();
         $rates = DB::table('comments')->select(DB::raw('avg(rate)as avg,book_id,comment'))
         ->where('rate', '!=', 0)
         ->groupBy('book_id','comment')->get();
-// dd($rates);
-        // return view("mktabaty/includes/book", compact('favourites', 'books','rates'));        // "RatedBooks" => DB::table('comments')
 
-// dd($books);
         return view('mktabaty/pages/books/index', compact('bookCategories', 'books', 'active','rates'));
+    }
+
+    public function search(Request $request){
+
+        if ($request->selectButton == "title") {
+            $books = Book::query()
+                    ->where('title', 'LIKE', "%{$request->searchButton}%")
+                    ->get();
+        }else if ($request->selectButton == "author") {
+            $books = Book::query()
+                    ->where('author', 'LIKE', "%{$request->searchButton}%")
+                    ->get();
+        }else {
+            $books = Book::all();
+        }
+        return $this->webBooks()->with('books', $books);
     }
 }
