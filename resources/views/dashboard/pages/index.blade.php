@@ -4,6 +4,11 @@
 <div class="content">
     <div class="container-fluid">
         <div class="row justify-content-center">
+            @if(session()->get('message'))
+            <div class="col-xl-6 col-lg-8 alert alert-success">
+                {{ session()->get('message') }}
+            </div><br />
+            @endif
             <div class="col-xl-10 col-lg-12">
                 <div class="card card-chart">
                     <div class="card-header card-header-success">
