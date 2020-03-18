@@ -175,7 +175,7 @@ class BookController extends Controller
         }
         // $books = Book::orderBy('id', 'desc')->where('category_id', $active)->paginate(3);
         $books = Book::all();
-   
+
 
         return view('mktabaty/pages/books/index', compact('bookCategories', 'books', 'active'));
     }
@@ -190,6 +190,21 @@ class BookController extends Controller
             $books = Book::query()
                     ->where('author', 'LIKE', "%{$request->searchButton}%")
                     ->get();
+        }else {
+            $books = Book::all();
+        }
+        return $this->webBooks()->with('books', $books);
+    }
+
+    public function sortBooks(Request $request){
+        if ($request->listBy == "latest") {
+            $books = Book::orderBy('created_at', 'desc')
+                    ->get();
+        }else if ($request->listBy == "name") {
+            $books = Book::orderBy('title')
+                    ->get();
+        }else if ($request->listBy == "rate") {
+
         }else {
             $books = Book::all();
         }

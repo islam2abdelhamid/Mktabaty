@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link href="https://fonts.googleapis.com/css?family=Goudy+Bookletter+1911&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/ico" href="images//b018978995324d2b64160a62514a7970.jpg">
 
   <link rel="stylesheet" href={{asset("assets/user/css/style.css")}} />
 </head>

@@ -14,6 +14,7 @@ Auth::routes();
 //Route::get('/', 'Admin\BookController@index');
 
 Route::get('bookSearch', 'Admin\BookController@search');
+Route::get('bookSort', 'Admin\BookController@sortBooks');
 
 
 Route::get('/favorites', function () {

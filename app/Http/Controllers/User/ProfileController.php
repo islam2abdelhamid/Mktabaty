@@ -90,6 +90,7 @@ class ProfileController extends Controller
     public function update(UpdateProfile $request, $id)
     {
         
+        
         $user = User::find($id);
         $user->name = $request->name;
         $user->username = $request->username;
