@@ -43,4 +43,8 @@ class Book extends Model
         } else
             return 0;
     }
+
+  
+ 
+
 }

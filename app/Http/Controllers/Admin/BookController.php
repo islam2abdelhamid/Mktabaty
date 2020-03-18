@@ -9,6 +9,7 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Illuminate\Validation\Rule;
 use App\Book;
 use App\Category;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use SebastianBergmann\Environment\Console;
 
@@ -180,32 +181,36 @@ class BookController extends Controller
         return view('mktabaty/pages/books/index', compact('bookCategories', 'books', 'active'));
     }
 
-    public function search(Request $request){
+    public function search(Request $request)
+    {
 
         if ($request->selectButton == "title") {
             $books = Book::query()
-                    ->where('title', 'LIKE', "%{$request->searchButton}%")
-                    ->get();
-        }else if ($request->selectButton == "author") {
+                ->where('title', 'LIKE', "%{$request->searchButton}%")
+                ->get();
+        } else if ($request->selectButton == "author") {
             $books = Book::query()
-                    ->where('author', 'LIKE', "%{$request->searchButton}%")
-                    ->get();
-        }else {
+                ->where('author', 'LIKE', "%{$request->searchButton}%")
+                ->get();
+        } else {
             $books = Book::all();
         }
         return $this->webBooks()->with('books', $books);
     }
 
-    public function sortBooks(Request $request){
+    public function sortBooks(Request $request)
+    {
         if ($request->listBy == "latest") {
             $books = Book::orderBy('created_at', 'desc')
-                    ->get();
-        }else if ($request->listBy == "name") {
+                ->get();
+        } else if ($request->listBy == "name") {
             $books = Book::orderBy('title')
-                    ->get();
-        }else if ($request->listBy == "rate") {
-
-        }else {
+                ->get();
+        } else if ($request->listBy == "rate") {
+            $books = Arr::sortDesc(Book::all(), function ($book) {
+                return $book->getRates();
+            });
+        } else {
             $books = Book::all();
         }
         return $this->webBooks()->with('books', $books);
