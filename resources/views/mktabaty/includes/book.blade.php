@@ -8,7 +8,6 @@
             </h4>
             <span class="text-secondary d-flex ">By {{$book->author}}</span>
 
-            <i class="fa fa-heart-o fa-pull-right mb-3" aria-hidden="true"></i>
 
             <div class="star-rating">
                 @for ($i = 0; $i < $book->getRates(); $i++) <span class="fa fa-star checked commentRate"></span>
