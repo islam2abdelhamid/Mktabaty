@@ -106,7 +106,7 @@ class CategoryController extends Controller
         //
         $category = Category::findOrFail($id);
         $category->delete();
-
+        Book::where('category_id', $category->id)->delete();
         return redirect()->route('books.index')->with('message', 'Category is successfully Deleted');
     }
 }
