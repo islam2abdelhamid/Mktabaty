@@ -32,16 +32,20 @@
         </div>
     </form>
 
+
     <div class="col-md-6">
+        <form action="{{ url('bookSort') }}" method="GET">
         <div class="form-group">
-            <select class="form-control" name="listBy" id="listBy">
+            <select class="form-control" name="listBy" id="listBy" onchange="this.form.submit()">
                 <option value="" disabled selected>List By</option>
                 <option value="latest">Latest</option>
                 <option value="name">Name</option>
                 <option value="rate">Rate</option>
             </select>
         </div>
+        </form>
     </div>
+
 </div>
 <script src="../../../js/app.js"></script>
 <script>
