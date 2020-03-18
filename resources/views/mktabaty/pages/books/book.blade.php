@@ -182,7 +182,7 @@
 <div class="row">
 
     @foreach ($book->category->books as $book)
-    <div class="col mt-4">
+    <div class="col-md-4 mt-4">
         <div class="card card-plain">
             <img class="card-img-top" src={{asset("images/".$book->image)}} alt="book image" height="250px">
 

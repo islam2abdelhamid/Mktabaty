@@ -81,6 +81,6 @@ class BookLeaseController extends Controller
             $message = 'You Already leased this book';
         }
         $book = Book::find($id);
-        return redirect()->route('books.show', ['id' => $book->id])->with('message', $message);
+        return redirect()->route('showBook', ['id' => $book->id])->with('message', $message);
     }
 }

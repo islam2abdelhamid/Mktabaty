@@ -91,9 +91,9 @@
                                                 <a href={{route('books.edit',$book->id)}}
                                                     class="btn btn-success btn-sm">Edit</a>
 
-                                                <form action="{{ url('books/'.$book->id) }}" method="POST">
-                                                    @method('DELETE')
+                                                <form action="{{ route('books.destroy', $book) }}" method="POST">
                                                     @csrf
+                                                    @method('DELETE')
                                                     <button class="btn btn-danger btn-sm">Delete</button>
                                                 </form>
                                             </td>
