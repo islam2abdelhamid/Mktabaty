@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\User;
 
 use App\Book;
+use App\Comment as AppComment;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Egulias\EmailValidator\Warning\Comment;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class CommentController extends Controller
@@ -109,11 +111,12 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        //
-        $comment = Comment::findOrFail($id);
-        if ($comment->user_id == Auth()->user()->id) {
-            $comment->delete();
-        }
-        return  Redirect::back();
+      
+       $comment= DB::table('comments')->where('book_id', $id);
+        // dd($comment);
+        $comment->delete();
+        $message = "your comment is deleted successfully";
+
+        return redirect()->back()->with('message', $message);
     }
 }

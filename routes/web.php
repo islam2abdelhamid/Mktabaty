@@ -40,6 +40,8 @@ Route::group(['middleware' => ['can:view,App\User'], 'prefix' => 'admin'], funct
 Route::get('/getBooks/{id}/', 'Admin\BookController@categoryBooks')->name('getBooks');
 Route::get('/', 'Admin\BookController@webBooks');
 Route::post('comment/{id}', 'User\CommentController@store')->name('comment');
+Route::delete('comment/{id}', 'User\CommentController@destroy')->name('comments');
+
 Route::post('fav/{id}', 'FavouriteController@store')->name('fav')->middleware('auth');
 Route::get('/favorites', 'FavouriteController@index')->middleware('auth');;
 

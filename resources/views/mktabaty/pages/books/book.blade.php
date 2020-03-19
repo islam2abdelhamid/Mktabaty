@@ -162,7 +162,13 @@
             {{$comment['comment']}}
         </p>
     </div>
-
+    <div class="align-self-center">
+        <form action="{{ route('comments', $book->id)}}" method="post">
+            @csrf 
+            @method('DELETE')
+            <button class="btn btn-danger" type="submit">Delete</button>
+        </form>
+    </div>
 </div>
 @endforeach
 
