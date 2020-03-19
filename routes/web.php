@@ -43,6 +43,8 @@ Route::post('comment/{id}', 'User\CommentController@store')->name('comment');
 Route::delete('comment/{id}', 'User\CommentController@destroy')->name('comments');
 
 Route::post('fav/{id}', 'FavouriteController@store')->name('fav')->middleware('auth');
+Route::delete('fav/{id}', 'FavouriteController@destroy')->name('favs')->middleware('auth');
+
 Route::get('/favorites', 'FavouriteController@index')->middleware('auth');;
 
 
