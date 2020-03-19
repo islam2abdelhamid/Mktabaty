@@ -63,11 +63,12 @@
                     <div class="alert alert-success">
                         You already leased this book, Happy Reading :)
                     </div>
+                    @elseif($book->available === 0)
+                    <button type="button" class="btn btn-secondary" disabled style="cursor:not-allowed">No copies available Now</button>
                     @else
                     <button class="btn btn-success" data-toggle="modal" data-target="#leaseModal"
                         data-whatever="@mdo">Lease</button>
                     @endif
-
                 </div>
             </div>
 
