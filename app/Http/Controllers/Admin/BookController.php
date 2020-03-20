@@ -133,7 +133,8 @@ class BookController extends Controller
             $book->image = $imageName;
         }
         $book->save();
-        return back()->with('message', 'Book updated successfully');
+        return $this->index()->with('message', 'Book updated successfully');
+        //return back()->with('message', 'Book updated successfully');
     }
 
     /**
