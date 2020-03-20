@@ -23,10 +23,10 @@
 
                 <div class="star-rating">
                     @for ($i = 0; $i < $book->getRates(); $i++) <span class="fa fa-star checked commentRate"></span>
-                    @endfor
-                    @for ($i = 5; $i > $book->getRates() ;$i--)
-                    <span class="fa fa-star  commentRate"></span>
-                    @endfor
+                        @endfor
+                        @for ($i = 5; $i > $book->getRates() ;$i--)
+                        <span class="fa fa-star  commentRate"></span>
+                        @endfor
                 </div>
 
                 <p class="card-text">
@@ -64,7 +64,8 @@
                         You already leased this book, Happy Reading :)
                     </div>
                     @elseif($book->available === 0)
-                    <button type="button" class="btn btn-secondary" disabled style="cursor:not-allowed">No copies available Now</button>
+                    <button type="button" class="btn btn-secondary" disabled style="cursor:not-allowed">No copies
+                        available Now</button>
                     @else
                     <button class="btn btn-success" data-toggle="modal" data-target="#leaseModal"
                         data-whatever="@mdo">Lease</button>
@@ -73,7 +74,6 @@
             </div>
 
         </div>
-        {{-- @if (auth::user()->leasedBooks()->get()->contains('book_id',$book->id)) --}}
 
 
         @if (auth::user()->favoriteBooks()->get()->contains('id',$book->id))
@@ -137,38 +137,46 @@
 
 @foreach ($book->comments as $comment)
 <div class="d-flex mt-3">
-    
-    <div class="thumbnail d-flex justify-content-center">
-        <img class="img-responsive user-photo" src={{asset("Userimages/".$comment->user->image) }} width="300px">
-    </div>
-    <div class="card p-2 flex-grow-1">
-        <div>
-            <div class="d-flex justify-content-between align-items-center">
-                <strong>{{$comment->user['name']}}</strong>
 
-                <div class="star-rating d-flex justify-content-center rate">
-                    @for ($i = 0; $i < $comment['rate']; $i++) <span class="fa fa-star checked commentRate"></span>
-                        @endfor
-                        @for ($i = 5; $i > $comment['rate']; $i--)
-                        <span class="fa fa-star  commentRate"></span>
-                        @endfor
+    <div class="thumbnail d-flex justify-content-center">
+        <img class="img-responsive user-photo" src={{asset("Userimages/".$comment->user->image) }} width="100px">
+    </div>
+    <div class="card p-2 flex-grow-1 d-flex flex-row justify-content- align-items-start ">
+
+        <div>
+            <div>
+                <div class="d-flex justify-content-arround align-items-center">
+                    <div>
+                        <strong>{{$comment->user['name']}}</strong>
+                        <div class="star-rating d-flex justify-content-center rate">
+                            @for ($i = 0; $i < $comment['rate']; $i++) <span class="fa fa-star checked commentRate">
+                                </span>
+                                @endfor
+                                @for ($i = 5; $i > $comment['rate']; $i--)
+                                <span class="fa fa-star  commentRate"></span>
+                                @endfor
+                        </div>
+                    </div>
                 </div>
+
+                <span class="text-muted"><time datetime="2014-12-16T01:05">{{$comment['rated_at']}}</time></span>
             </div>
 
-            <span class="text-muted"><time datetime="2014-12-16T01:05">{{$comment['rated_at']}}</time></span>
+            <p>
+                {{$comment['comment']}}
+            </p>
         </div>
 
-        <p>
-            {{$comment['comment']}}
-        </p>
-    </div>
-    <div class="align-self-center">
+
         <form action="{{ route('comments', $book->id)}}" method="post">
-            @csrf 
+            @csrf
             @method('DELETE')
-            <button class="btn btn-danger" type="submit">Delete</button>
+            <button type="submit" class="close" aria-label="Close" type="submit">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </form>
     </div>
+
 </div>
 @endforeach
 
@@ -178,9 +186,43 @@
 <!-- End show previous comment -->
 
 
+
+{{-- Begining of   Lease Modal --}}
+<div class="modal fade mt-5" id="leaseModal" tabindex="-1" role="dialog" aria-labelledby="leaseModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="leaseModalLabel">Lease Book</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form action="{{ route('bookLease', $book->id)}}" method="post" class="d-inline">
+                    @csrf
+                    @method('POST')
+                    <div class="form-group">
+                        <label for="lease-days" class="col-form-label">NO. of Days :</label>
+                        <input type="number" class="form-control" id="lease-days" name="lease_days">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Confirm Lease</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+{{-- End of lease Modal --}}
+
+
 <!-- Related Books -->
 
-<div class="row top-buffer mt-5">
+<div class=" row top-buffer mt-5">
     <div class="col-sm-12">
         <h3>Related Books</h3>
     </div><!-- /col-sm-12 -->
@@ -214,50 +256,6 @@
 
 <!-- End Related Books -->
 
-<div class="row top-buffer">
-    <div class="col-sm-12">
-        <div class="footer"></div>
-    </div><!-- /col-sm-12 -->
-</div><!-- /row -->
-
-</div>
 
 
-{{-- Begining of   Lease Modal --}}
-<div class="modal fade mt-5" id="leaseModal" tabindex="-1" role="dialog" aria-labelledby="leaseModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="leaseModalLabel">Lease Book</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-                @if (auth::user()->leasedBooks()->get()->contains('id',$book->id))
-                <div class="alert alert-success">
-                    You already leased this book, Happy Reading :)
-                </div>
-                @else
-                <form action="{{ route('bookLease', $book->id)}}" method="post" class="d-inline">
-                    @csrf
-                    @method('POST')
-                    <div class="form-group">
-                        <label for="lease-days" class="col-form-label">NO. of Days :</label>
-                        <input type="number" class="form-control" id="lease-days" name="lease_days">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success">Confirm Lease</button>
-                    </div>
-                </form>
-                @endif
-            </div>
-
-        </div>
-    </div>
-</div>
-{{-- End of lease Modal --}}
 @stop

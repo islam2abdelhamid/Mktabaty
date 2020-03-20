@@ -54,6 +54,11 @@ php artisan migrate
 php artisan db:seed
 ```
 
+##### Start books return scheduler
+
+```
+php artisan schedule:run
+```
 ##### Run the project
 
 ```

@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','username','image','isAdmin'
+        'name', 'email', 'password', 'username', 'image', 'isAdmin'
     ];
 
     /**
@@ -39,17 +39,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function leasedBooks(){
-        return $this->BelongsToMany(Book::class,'book_lease');
+    public function leasedBooks()
+    {
+        return $this->BelongsToMany(Book::class, 'book_lease')->wherePivot('deleted_at', '=', null);
     }
 
-    public function favoriteBooks(){
+    public function favoriteBooks()
+    {
         return $this->belongsToMany('App\Book', 'book_favorites');
     }
-    
+
     public function rates()
     {
-        return $this->belongsToMany('App\Book','comments','user_id','book_id')->withPivot('book_id','rate', 'comment','created_at','user_id');
+        return $this->belongsToMany('App\Book', 'comments', 'user_id', 'book_id')->withPivot('book_id', 'rate', 'comment', 'created_at', 'user_id');
     }
-
 }

@@ -42,7 +42,7 @@ class ReturnLeasedBook extends Command
         try {
             DB::beginTransaction();
             $rows = DB::table('book_lease')->where('return_at', '<=', Carbon::now())->get();
-            DB::table('book_lease')->where('return_at', '<=', Carbon::now())->delete();
+            DB::table('book_lease')->where('return_at', '<=', Carbon::now())->update(array('deleted_at' => DB::raw('NOW()')));
 
             foreach ($rows as $row) {
                 DB::table('books')->where('id', $row->book_id)->increment('available');

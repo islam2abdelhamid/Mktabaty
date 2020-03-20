@@ -3,7 +3,7 @@
         <img class="card-img-top" src={{asset("images/".$book->image)}} alt="book image" height="250px" />
 
         <div class="card-body">
-            @if (auth::user()->favoriteBooks()->get()->contains('id',$book->id))
+            {{-- @if (auth::user()->favoriteBooks()->get()->contains('id',$book->id))
             <form class="d-flex justify-content-between " action="{{ route('favs', $book->id)}}" method="POST">
                 @csrf
                 @method('DELETE')
@@ -18,7 +18,7 @@
             @else
             <i class="fa fa-heart-o fa-pull-right mb-3" aria-hidden="true"></i>
            
-            @endif
+            @endif --}}
             <h4 class="card-title mb-0">
                 <a href="{{route('showBook' ,['id'=> $book->id])}}" class="no-decoration">{{$book->title}}</a>
             </h4>
