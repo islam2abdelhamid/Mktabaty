@@ -30,8 +30,6 @@ class FavouriteController extends Controller
         // dd($rates);
 
         return view("mktabaty/pages/books/favorites", compact('favourites', 'books', 'rates'));        // "RatedBooks" => DB::table('comments')
-
-
     }
 
     /**
@@ -52,7 +50,6 @@ class FavouriteController extends Controller
      */
     public function store(Request $request, $id)
     {
-        
         $favourite = new Favorites();
         $favourite->book_id = $request->book_id;
         $favourite->user_id = Auth::id();
@@ -101,8 +98,13 @@ class FavouriteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy(Request $request){
+        Favorites::where([
+            ['user_id', Auth::id()],
+            ['book_id', $request->id]
+        ])->delete();
+        return redirect()->back();
     }
+    
 }
+

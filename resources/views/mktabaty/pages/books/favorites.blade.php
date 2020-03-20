@@ -6,7 +6,9 @@
 @section('content')
 @foreach ( $books as $book )
 @if(in_array($book->id,$favourites))
+
 @include('mktabaty.includes.book')
+
 @endif
 @endforeach
 

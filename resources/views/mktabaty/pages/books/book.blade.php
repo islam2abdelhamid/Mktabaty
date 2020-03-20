@@ -22,11 +22,11 @@
                 </div>
 
                 <div class="star-rating">
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
+                    @for ($i = 0; $i < $book->getRates(); $i++) <span class="fa fa-star checked commentRate"></span>
+                    @endfor
+                    @for ($i = 5; $i > $book->getRates() ;$i--)
+                    <span class="fa fa-star  commentRate"></span>
+                    @endfor
                 </div>
 
                 <p class="card-text">
@@ -63,11 +63,12 @@
                     <div class="alert alert-success">
                         You already leased this book, Happy Reading :)
                     </div>
+                    @elseif($book->available === 0)
+                    <button type="button" class="btn btn-secondary" disabled style="cursor:not-allowed">No copies available Now</button>
                     @else
                     <button class="btn btn-success" data-toggle="modal" data-target="#leaseModal"
                         data-whatever="@mdo">Lease</button>
                     @endif
-
                 </div>
             </div>
 
@@ -161,7 +162,13 @@
             {{$comment['comment']}}
         </p>
     </div>
-
+    <div class="align-self-center">
+        <form action="{{ route('comments', $book->id)}}" method="post">
+            @csrf 
+            @method('DELETE')
+            <button class="btn btn-danger" type="submit">Delete</button>
+        </form>
+    </div>
 </div>
 @endforeach
 
