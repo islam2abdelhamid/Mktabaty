@@ -144,10 +144,9 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('books')
-            ->where('id', '=', $id)
-            ->delete();
-
+        $book = Book::findOrFail($id);
+        $book->delete();
+     
         return back()->with('message', 'Book deleted successfully');
     }
 
