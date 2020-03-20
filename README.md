@@ -2,14 +2,15 @@
 
 ## About Mktabaty
 
-Mktabaty is a web application to manage a bookstore, user can lease a book or more for one day to five, after that book will be returned back.
+Mktabaty is a web application to manage a bookstore, user can lease a book or more for one day to five.
+after that book will be returned back.
 
 ## Users Roles
 
 - user
 - admin
 
-the admin has a dashboard so that he can add, remove and update books and books category, also show users and another admin.
+the admin has a dashboard so that he can add, remove and update books and books categories, also show users and another admins.
 
 ## Installation instructions:
 
