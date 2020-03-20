@@ -22,11 +22,11 @@
                 </div>
 
                 <div class="star-rating">
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
+                    @for ($i = 0; $i < $book->getRates(); $i++) <span class="fa fa-star checked commentRate"></span>
+                    @endfor
+                    @for ($i = 5; $i > $book->getRates() ;$i--)
+                    <span class="fa fa-star  commentRate"></span>
+                    @endfor
                 </div>
 
                 <p class="card-text">
