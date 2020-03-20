@@ -110,3 +110,4 @@ class CategoryController extends Controller
         return redirect()->route('books.index')->with('message', 'Category is successfully Deleted');
     }
 }
+ 
