@@ -39,10 +39,15 @@ class LoginController extends Controller
     }
     public function username()
     {
-        $userState = User::where('username', $_POST['username'])->value('isActive');
+        $logintype = $_POST['username'];
+        $this->username = filter_var($logintype, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        request()->merge([$this->username => $logintype]);
+        
+        $userState = User::where($this->username, $_POST['username'])->value('isActive');
         if (!$userState)
             return false;
-        return 'username';
+
+        return property_exists($this, 'username') ? $this->username : 'email';
     }
     /**
      * Create a new controller instance.
