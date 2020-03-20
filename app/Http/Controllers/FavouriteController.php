@@ -103,8 +103,8 @@ class FavouriteController extends Controller
             ['user_id', Auth::id()],
             ['book_id', $request->id]
         ])->delete();
-        return redirect()->back();
-    }
-    
+        $message = 'Delete  book from your Favourites';
+        return redirect()->back()->with('message', $message);
+        }    
 }
 

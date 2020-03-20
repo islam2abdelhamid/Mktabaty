@@ -77,8 +77,17 @@
 
 
         @if (auth::user()->favoriteBooks()->get()->contains('id',$book->id))
-        <i class="fa fa-heart fa-pull-right mb-3" aria-hidden="true"></i>
-        @else
+        <form class="d-flex justify-content-between " action="{{ route('favs', $book->id)}}" method="POST">
+            @csrf
+            @method('DELETE')
+            <div class="col-3 mt-3">
+                <div class="d-flex justify-content-center">
+                    <input type="hidden" name="book_id" value={{$book->id}}>
+                    <button type="submit" class="btn"> <i class="fa fa-heart fa-pull-right mb-3" 
+                            aria-hidden="true"></i></button>
+                </div>
+            </div>
+        </form>        @else
         <form class="d-flex justify-content-between " action="{{ route('fav', $book->id)}}" method="POST">
             @csrf
             <div class="col-3 mt-3">
