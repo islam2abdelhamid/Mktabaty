@@ -83,7 +83,7 @@ class BookController extends Controller
     public function show($id)
     {
         //
-        $book = Book::findOrFail($id);
+        $book = Book::find($id);
         return view('mktabaty.pages.books.book', ['book' => $book]);
     }
 
@@ -96,7 +96,7 @@ class BookController extends Controller
     public function edit($id)
     {
         $categories = Category::all();
-        $book = Book::findOrFail($id);
+        $book = Book::find($id);
         return view('dashboard.pages.books.edit-book', ['book' => $book, 'categories' => $categories]);
     }
 
@@ -144,8 +144,8 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        $book = Book::findOrFail($id);
-        $book->delete();
+        Book::find($id)
+            ->delete();
 
         return back()->with('message', 'Book deleted successfully');
     }
@@ -155,7 +155,7 @@ class BookController extends Controller
     {
 
 
-        $category =  Category::findOrFail($category_id);
+        $category =  Category::find($category_id);
         $books = $category->books()->get();
         $bookCategories = Category::all();
 
