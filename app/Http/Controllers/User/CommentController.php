@@ -113,9 +113,15 @@ class CommentController extends Controller
     {
       
        $comment= DB::table('comments')->where('book_id', $id);
-        // dd($comment);
-        $comment->delete();
-        $message = "your comment is deleted successfully";
+       if(Auth::user()->can('delete', $comment))
+       {
+           $comment->delete();
+        $message = "your comment is  deleted successfully";
+
+        }
+        $message = "your comment is  deleted successfully";
+        $message = "you have no access in this comment";
+
 
         return redirect()->back()->with('message', $message);
     }
