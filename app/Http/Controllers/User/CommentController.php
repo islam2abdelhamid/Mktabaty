@@ -119,7 +119,6 @@ class CommentController extends Controller
         $message = "your comment is  deleted successfully";
 
         }
-        $message = "your comment is  deleted successfully";
         $message = "you have no access in this comment";
 
 
